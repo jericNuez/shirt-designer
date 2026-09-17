@@ -19,6 +19,12 @@ The application is structured into 3 interactive views:
 
 ---
 
+## Previews
+<img width="1919" height="989" alt="Screenshot 2026-09-18 at 2 18 12 AM" src="https://github.com/user-attachments/assets/04a51d06-e9c1-4a8e-b67c-937e499dac43" />
+<img width="1920" height="989" alt="Screenshot 2026-09-18 at 2 19 37 AM" src="https://github.com/user-attachments/assets/8f479880-77b9-427b-a865-fe511fee66b6" />
+
+---
+
 ## ☕ Author & Creator
 
 - **Author**: **Jeric Nuez**
