@@ -27,32 +27,6 @@ The application is structured into 3 interactive views:
 
 ---
 
-## 🌐 Deploy to Render
-
-### Quick 1-Click Deploy (Blueprint)
-
-Click the **Deploy to Render** button above or connect this repository directly to [Render](https://render.com). The project includes a [`render.yaml`](render.yaml) blueprint:
-
-- **Type**: Static Site
-- **Build Command**: `npm install && npm run build`
-- **Publish Directory**: `dist`
-- **Rewrite Rule**: `/* -> /index.html` (SPA fallback)
-
-### How to Show Render Deployment on Your GitHub Repository Page
-
-To have GitHub display the **"Environments: Production"** link and deployment checkmarks directly on your GitHub repo home page:
-
-1. **Link Render with GitHub**:
-   - In your [Render Dashboard](https://dashboard.render.com), create a **Static Site** and connect your GitHub repository (`jericnuez/shirt-designer`).
-   - Render automatically registers as a GitHub App and sends deployment status events to your repository.
-2. **View on GitHub**:
-   - Once the first build succeeds, GitHub will display an **"Environments"** section on the right sidebar of your repository with a green active indicator and link to your live URL.
-3. **Set Repository Website**:
-   - Click the ⚙️ icon next to the **About** section on the top right of your GitHub repository page.
-   - Check **"Use your Render deployment"** or paste your live URL (e.g. `https://shirt-designer.onrender.com`).
-
----
-
 ## ✨ Features
 
 - **🎮 360° Interactive 3D Garment Studio**:
