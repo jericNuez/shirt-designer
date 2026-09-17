@@ -46,10 +46,9 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
           </div>
           <div className="hidden sm:block">
             <div className="flex items-center gap-1.5">
-              <h1 className="text-xs font-black tracking-tight text-white uppercase">STUDIO 3D</h1>
-              <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-primary-500/20 text-primary-400 border border-primary-500/30">
-                PRO
-              </span>
+              <h1 className="text-xs font-black tracking-tight text-white uppercase">
+                3D T-Shirt Customizer Studio
+              </h1>
             </div>
             <p className="text-[10px] text-surface-400 font-medium">Custom Apparel</p>
           </div>
