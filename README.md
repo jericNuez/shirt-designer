@@ -1,5 +1,10 @@
 # 👕 3D T-Shirt Customizer Studio
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.2.0-indigo.svg)](src/data/changelog.ts)
+[![Render Deploy](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?style=flat-square&logo=render&logoColor=white)](https://shirt-designer.onrender.com)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Donate-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/jerictolibq)
+
 An interactive 3D Web Application for designing and customizing T-shirts in real-time. Built with **React**, **Three.js / React Three Fiber**, **Tailwind CSS**, and **ag-psd**.
 
 ---
@@ -22,6 +27,32 @@ The application is structured into 3 interactive views:
 
 ---
 
+## 🌐 Deploy to Render
+
+### Quick 1-Click Deploy (Blueprint)
+
+Click the **Deploy to Render** button above or connect this repository directly to [Render](https://render.com). The project includes a [`render.yaml`](render.yaml) blueprint:
+
+- **Type**: Static Site
+- **Build Command**: `npm install && npm run build`
+- **Publish Directory**: `dist`
+- **Rewrite Rule**: `/* -> /index.html` (SPA fallback)
+
+### How to Show Render Deployment on Your GitHub Repository Page
+
+To have GitHub display the **"Environments: Production"** link and deployment checkmarks directly on your GitHub repo home page:
+
+1. **Link Render with GitHub**:
+   - In your [Render Dashboard](https://dashboard.render.com), create a **Static Site** and connect your GitHub repository (`jericnuez/shirt-designer`).
+   - Render automatically registers as a GitHub App and sends deployment status events to your repository.
+2. **View on GitHub**:
+   - Once the first build succeeds, GitHub will display an **"Environments"** section on the right sidebar of your repository with a green active indicator and link to your live URL.
+3. **Set Repository Website**:
+   - Click the ⚙️ icon next to the **About** section on the top right of your GitHub repository page.
+   - Check **"Use your Render deployment"** or paste your live URL (e.g. `https://shirt-designer.onrender.com`).
+
+---
+
 ## ✨ Features
 
 - **🎮 360° Interactive 3D Garment Studio**:
@@ -39,9 +70,9 @@ The application is structured into 3 interactive views:
   - **Layer Management**: Reorder, duplicate, lock/unlock, toggle visibility, and align center.
   - **Undo / Redo History**: Full state history support (`Ctrl+Z` / `Ctrl+Y`).
 
-- **💬 User Feedback System**:
-  - Interactive feedback modal with 5-star rating, category tags, and local storage persistence.
-  - Automatically triggered upon successful design export to capture fresh user impressions.
+- **💬 Discord Webhook Feedback System**:
+  - Interactive in-app feedback modal with 5-star rating, category topics, and rich Discord Embed delivery.
+  - Automatically triggered upon successful design export to capture user impressions.
 
 - **📱 Fully Mobile Responsive**:
   - Touch-friendly 3D rotation, pinch-to-zoom, and 2D stage interaction.
@@ -64,6 +95,7 @@ The application is structured into 3 interactive views:
 
 ```bash
 # Clone or navigate to the project directory
+git clone https://github.com/jericnuez/shirt-designer.git
 cd shirt-designer
 
 # Install dependencies
@@ -73,11 +105,18 @@ npm install
 npm run dev
 ```
 
-### Production Build
+### Production Build & Linting
 
 ```bash
+# Type check and build for production
 npm run build
+
+# Preview production build locally
 npm run preview
+
+# Run ESLint & code formatting checks
+npm run lint
+npm run format:check
 ```
 
 ---
@@ -88,3 +127,10 @@ npm run preview
 - `Ctrl + Y` / `Cmd + Shift + Z`: Redo
 - `Ctrl + E` / `Cmd + E`: Open Export Modal
 - `Delete` / `Backspace`: Remove selected layer
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+© 2026 [Jeric Nuez](https://github.com/jericnuez).
