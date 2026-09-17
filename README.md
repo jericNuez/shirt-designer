@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.2.0-indigo.svg)](src/data/changelog.ts)
-[![Render Deploy](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?style=flat-square&logo=render&logoColor=white)](https://shirt-designer.onrender.com)
+[![Render Deploy](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?style=flat-square&logo=render&logoColor=white)](https://shirt-designer-4fe2.onrender.com)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Donate-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/jerictolibq)
 
 An interactive 3D Web Application for designing and customizing T-shirts in real-time. Built with **React**, **Three.js / React Three Fiber**, **Tailwind CSS**, and **ag-psd**.
