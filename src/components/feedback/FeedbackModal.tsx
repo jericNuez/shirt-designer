@@ -7,13 +7,14 @@ import {
   Bug,
   Zap,
   Heart,
-  Github,
-  ExternalLink,
+  Send,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useEditorStore } from '../../store/editorStore';
 
-const GITHUB_REPO = 'https://github.com/jericnuez/shirt-designer';
+const DISCORD_WEBHOOK_URL = import.meta.env.VITE_DISCORD_WEBHOOK_URL || '';
 
 export const FeedbackModal: React.FC = () => {
   const isOpen = useEditorStore((s) => s.isFeedbackModalOpen);
@@ -26,6 +27,8 @@ export const FeedbackModal: React.FC = () => {
   );
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   if (!isOpen) return null;
@@ -35,25 +38,29 @@ export const FeedbackModal: React.FC = () => {
       id: 'compliment',
       label: 'Love it! / Praise',
       icon: <Heart className="w-3.5 h-3.5 text-rose-400" />,
-      labelTag: 'feedback',
+      color: 0x22c55e, // Emerald Green
+      emoji: '💖',
     },
     {
       id: 'feature',
       label: 'Feature Request',
       icon: <Zap className="w-3.5 h-3.5 text-accent-400" />,
-      labelTag: 'enhancement',
+      color: 0xeab308, // Amber Gold
+      emoji: '💡',
     },
     {
       id: 'bug',
       label: 'Bug Report',
       icon: <Bug className="w-3.5 h-3.5 text-danger-400" />,
-      labelTag: 'bug',
+      color: 0xef4444, // Rose Red
+      emoji: '🐛',
     },
     {
       id: 'general',
       label: 'General Thoughts',
       icon: <MessageSquareHeart className="w-3.5 h-3.5 text-primary-400" />,
-      labelTag: 'feedback',
+      color: 0x6366f1, // Indigo Primary
+      emoji: '💬',
     },
   ];
 
@@ -84,82 +91,102 @@ export const FeedbackModal: React.FC = () => {
     }
   };
 
-  const createGithubIssueUrl = () => {
-    const selectedCat = categories.find((c) => c.id === category);
-    const catLabel = selectedCat ? selectedCat.label : 'Feedback';
-    const stars = '⭐'.repeat(rating);
-
-    const titlePrefix =
-      category === 'bug'
-        ? '[Bug Report]'
-        : category === 'feature'
-          ? '[Feature Request]'
-          : '[User Feedback]';
-
-    const shortSummary = message.slice(0, 50).trim() || 'New User Feedback';
-    const title = `${titlePrefix} ${shortSummary}${message.length > 50 ? '...' : ''}`;
-
-    const body = `### 📋 Feedback Summary
-- **Category:** ${catLabel}
-- **Rating:** ${stars} (${rating}/5 - ${ratingDescriptions[rating] || ''})
-- **App Version:** v1.2.0
-${email ? `- **User Contact:** ${email}` : ''}
-- **Date:** ${new Date().toUTCString()}
-
----
-
-### 💬 Feedback & Details
-${message}
-
----
-
-### 🖥️ Client Environment
-- **Browser:** \`${typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown'}\`
-- **Screen:** \`${typeof window !== 'undefined' ? `${window.screen.width}x${window.screen.height}` : 'Unknown'}\`
-
-*Submitted via 3D T-Shirt Customizer Studio In-App Feedback.*`;
-
-    const labels = ['feedback'];
-    if (selectedCat?.labelTag && !labels.includes(selectedCat.labelTag)) {
-      labels.push(selectedCat.labelTag);
-    }
-
-    const params = new URLSearchParams({
-      title,
-      body,
-      labels: labels.join(','),
-    });
-
-    return `${GITHUB_REPO}/issues/new?${params.toString()}`;
-  };
-
-  const handleGitHubSubmit = (e: React.FormEvent) => {
+  const handleDiscordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) {
       alert('Please enter your feedback message.');
       return;
     }
 
-    saveFeedbackLocally();
+    setIsSubmitting(true);
+    setErrorMessage(null);
 
-    // Open GitHub pre-filled issue in new tab
-    const issueUrl = createGithubIssueUrl();
-    window.open(issueUrl, '_blank', 'noopener,noreferrer');
+    const selectedCat = categories.find((c) => c.id === category) || categories[0];
+    const stars = '⭐'.repeat(rating);
 
-    // Trigger celebration
-    confetti({
-      particleCount: 70,
-      spread: 60,
-      origin: { y: 0.6 },
-    });
+    const embed = {
+      title: `${selectedCat.emoji} New User Feedback: ${selectedCat.label}`,
+      description: message,
+      color: selectedCat.color,
+      fields: [
+        {
+          name: '⭐ Rating',
+          value: `${stars} (${rating}/5 - ${ratingDescriptions[rating] || ''})`,
+          inline: true,
+        },
+        {
+          name: '🏷️ Topic',
+          value: selectedCat.label,
+          inline: true,
+        },
+        ...(email
+          ? [
+              {
+                name: '📧 Contact Email',
+                value: `\`${email}\``,
+                inline: false,
+              },
+            ]
+          : []),
+      ],
+      footer: {
+        text: `3D T-Shirt Customizer Studio v1.2.0 • Screen: ${
+          typeof window !== 'undefined' ? `${window.screen.width}x${window.screen.height}` : 'N/A'
+        }`,
+      },
+      timestamp: new Date().toISOString(),
+    };
 
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setMessage('');
-      setEmail('');
-      setOpen(false);
-    }, 2500);
+    const payload = {
+      username: '3D T-Shirt Customizer Feedback',
+      embeds: [embed],
+    };
+
+    try {
+      // Save a local copy as backup
+      saveFeedbackLocally();
+
+      if (DISCORD_WEBHOOK_URL) {
+        const res = await fetch(DISCORD_WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          throw new Error(`Discord Webhook error (Status ${res.status})`);
+        }
+      } else {
+        console.warn(
+          'VITE_DISCORD_WEBHOOK_URL is not set in .env. Feedback saved locally:',
+          payload
+        );
+      }
+
+      // Trigger celebration
+      confetti({
+        particleCount: 75,
+        spread: 65,
+        origin: { y: 0.6 },
+      });
+
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setMessage('');
+        setEmail('');
+        setOpen(false);
+      }, 2500);
+    } catch (err: any) {
+      console.error('Failed to send feedback to Discord Webhook:', err);
+      setErrorMessage(
+        err?.message || 'Unable to send feedback to Discord. Your feedback was saved locally.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -193,11 +220,23 @@ ${message}
             </div>
             <h3 className="text-lg font-bold text-white">Thank You for Your Feedback!</h3>
             <p className="text-xs text-surface-400 max-w-xs mx-auto">
-              Your issue template has been opened on GitHub and recorded. We appreciate your ideas!
+              Your message has been sent directly to the development team. We appreciate your
+              thoughts!
             </p>
           </div>
         ) : (
-          <form onSubmit={handleGitHubSubmit} className="space-y-4">
+          <form onSubmit={handleDiscordSubmit} className="space-y-4">
+            {/* Error Message Banner */}
+            {errorMessage && (
+              <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-danger-500/10 border border-danger-500/30 text-danger-300 text-xs">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <span className="font-bold">Notice: </span>
+                  <span>{errorMessage}</span>
+                </div>
+              </div>
+            )}
+
             {/* 5-Star Rating */}
             <div className="space-y-1.5 text-center bg-surface-950/60 p-4 rounded-2xl border border-surface-800/80">
               <label className="text-xs font-bold text-surface-300 uppercase tracking-wider">
@@ -281,31 +320,32 @@ ${message}
               />
             </div>
 
-            {/* Notice */}
-            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-surface-950/40 border border-surface-800 text-[11px] text-surface-400">
-              <Github className="w-4 h-4 text-surface-300 shrink-0" />
-              <span>
-                Submitting opens a formatted issue on GitHub for transparent tracking and quick
-                resolution.
-              </span>
-            </div>
-
             {/* Submit Actions */}
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-surface-400 hover:text-white hover:bg-surface-800 transition"
+                disabled={isSubmitting}
+                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-surface-400 hover:text-white hover:bg-surface-800 transition disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95"
+                disabled={isSubmitting}
+                className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 disabled:opacity-75 disabled:scale-100"
               >
-                <Github className="w-3.5 h-3.5" />
-                <span>Submit to GitHub</span>
-                <ExternalLink className="w-3 h-3 opacity-75" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-3.5 h-3.5" />
+                    <span>Send Feedback</span>
+                  </>
+                )}
               </button>
             </div>
           </form>
