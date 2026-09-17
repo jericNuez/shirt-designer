@@ -1,4 +1,4 @@
-import { DesignLayer, ImageLayer, TextLayer, ShapeLayer, BadgeLayer } from '../types/editor';
+import { DesignLayer, ImageLayer, TextLayer, ShapeLayer } from '../types/editor';
 
 /**
  * Draws curved text along an arc on a 2D canvas context
@@ -14,18 +14,18 @@ function drawCurvedText(
   isStroke: boolean
 ) {
   ctx.save();
-  
+
   // Calculate total angle based on characters
   const len = text.length;
   const chars = text.split('');
-  
+
   // Measure character widths
-  const charWidths = chars.map(c => ctx.measureText(c).width + letterSpacing);
+  const charWidths = chars.map((c) => ctx.measureText(c).width + letterSpacing);
   const totalWidth = charWidths.reduce((a, b) => a + b, 0);
-  
+
   const arcLength = totalWidth / Math.abs(radius);
   let currentAngle = -arcLength / 2;
-  
+
   if (radius < 0) {
     currentAngle = Math.PI - currentAngle;
   }
@@ -33,12 +33,12 @@ function drawCurvedText(
   for (let i = 0; i < len; i++) {
     const char = chars[i];
     const charW = charWidths[i];
-    const halfCharAngle = (charW / 2) / Math.abs(radius);
-    
+    const halfCharAngle = charW / 2 / Math.abs(radius);
+
     currentAngle += halfCharAngle * (radius > 0 ? 1 : -1);
-    
+
     ctx.save();
-    
+
     if (radius > 0) {
       // Arched up
       const x = centerX + Math.sin(currentAngle) * radius;
@@ -53,20 +53,20 @@ function drawCurvedText(
       ctx.translate(x, y);
       ctx.rotate(currentAngle + Math.PI);
     }
-    
+
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    
+
     if (isStroke) {
       ctx.strokeText(char, 0, 0);
     } else {
       ctx.fillText(char, 0, 0);
     }
-    
+
     ctx.restore();
     currentAngle += halfCharAngle * (radius > 0 ? 1 : -1);
   }
-  
+
   ctx.restore();
 }
 
@@ -76,16 +76,16 @@ function drawCurvedText(
 function drawShape(ctx: CanvasRenderingContext2D, shape: ShapeLayer, size: number) {
   const half = size / 2;
   ctx.beginPath();
-  
+
   switch (shape.shapeType) {
     case 'circle':
       ctx.arc(0, 0, half, 0, Math.PI * 2);
       break;
-      
+
     case 'square':
       ctx.rect(-half, -half, size, size);
       break;
-      
+
     case 'star': {
       const spikes = 5;
       const outerRadius = half;
@@ -111,7 +111,7 @@ function drawShape(ctx: CanvasRenderingContext2D, shape: ShapeLayer, size: numbe
       ctx.closePath();
       break;
     }
-    
+
     case 'heart': {
       const w = size;
       const h = size;
@@ -203,7 +203,7 @@ export async function renderLayersToCanvas(
     if (!layer.visible) continue;
 
     ctx.save();
-    
+
     // Position layer
     const posX = layer.x * width;
     const posY = layer.y * height;
@@ -221,7 +221,7 @@ export async function renderLayersToCanvas(
       const textLayer = layer as TextLayer;
       const baseFontSize = textLayer.fontSize * (width / 800);
       ctx.font = `${textLayer.fontStyle} ${textLayer.fontWeight} ${baseFontSize}px "${textLayer.fontFamily}", sans-serif`;
-      
+
       // Shadow
       if (textLayer.shadowColor && textLayer.shadowBlur > 0) {
         ctx.shadowColor = textLayer.shadowColor;
@@ -235,10 +235,28 @@ export async function renderLayersToCanvas(
         if (textLayer.strokeColor && textLayer.strokeWidth > 0) {
           ctx.strokeStyle = textLayer.strokeColor;
           ctx.lineWidth = textLayer.strokeWidth * (width / 800);
-          drawCurvedText(ctx, textLayer.text, 0, 0, radius, baseFontSize, textLayer.letterSpacing, true);
+          drawCurvedText(
+            ctx,
+            textLayer.text,
+            0,
+            0,
+            radius,
+            baseFontSize,
+            textLayer.letterSpacing,
+            true
+          );
         }
         ctx.fillStyle = textLayer.fillColor;
-        drawCurvedText(ctx, textLayer.text, 0, 0, radius, baseFontSize, textLayer.letterSpacing, false);
+        drawCurvedText(
+          ctx,
+          textLayer.text,
+          0,
+          0,
+          radius,
+          baseFontSize,
+          textLayer.letterSpacing,
+          false
+        );
       } else {
         ctx.textAlign = textLayer.textAlign || 'center';
         ctx.textBaseline = 'middle';

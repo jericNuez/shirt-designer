@@ -82,9 +82,14 @@ export const StudioScene: React.FC<StudioSceneProps> = ({ canvasRef }) => {
         <Suspense fallback={null}>
           <CameraManager />
           <StudioLighting />
-          
+
           {/* 3D GLB Garment Model with subtle organic float */}
-          <Float speed={1.0} rotationIntensity={0.05} floatIntensity={0.08} floatingRange={[-0.03, 0.03]}>
+          <Float
+            speed={1.0}
+            rotationIntensity={0.05}
+            floatIntensity={0.08}
+            floatingRange={[-0.03, 0.03]}
+          >
             <TShirtModel />
           </Float>
 

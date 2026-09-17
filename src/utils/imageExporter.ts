@@ -37,7 +37,7 @@ export async function capture3DMockup(
     const { writePsd } = await import('ag-psd');
     const width = canvas.width;
     const height = canvas.height;
-    
+
     const psd = {
       width,
       height,
@@ -59,7 +59,7 @@ export async function capture3DMockup(
   }
 
   // Handle PNG / JPEG
-  if (background === 'transparent' && (format === 'png')) {
+  if (background === 'transparent' && format === 'png') {
     return new Promise((resolve) => {
       canvas.toBlob((blob) => resolve(blob!), 'image/png');
     });
@@ -100,7 +100,7 @@ export async function capture3DMockup(
 
   ctx.drawImage(canvas, 0, 0);
 
-  const mime = (format === 'jpg' || format === 'jpeg') ? 'image/jpeg' : 'image/png';
+  const mime = format === 'jpg' || format === 'jpeg' ? 'image/jpeg' : 'image/png';
   return new Promise((resolve) => {
     tempCanvas.toBlob((blob) => resolve(blob!), mime, 0.95);
   });
@@ -116,7 +116,7 @@ export async function generatePrintArtwork(
   options: ExportOptions
 ): Promise<Blob | string> {
   const size = options.resolution === 'print_300dpi' ? 3000 : 2000;
-  
+
   if (options.format === 'psd') {
     return await exportToPSD(layers, colors, zone, size, size);
   }
@@ -146,11 +146,15 @@ export async function generatePrintArtwork(
 
     ctx.fillStyle = 'rgba(99, 102, 241, 0.8)';
     ctx.font = `bold ${size * 0.02}px sans-serif`;
-    ctx.fillText(`Print Area Bounds: 12" x 16" (300 DPI) - ${zone.toUpperCase()}`, size * 0.16, size * 0.14);
+    ctx.fillText(
+      `Print Area Bounds: 12" x 16" (300 DPI) - ${zone.toUpperCase()}`,
+      size * 0.16,
+      size * 0.14
+    );
     ctx.restore();
   }
 
-  const mime = (options.format === 'jpg' || options.format === 'jpeg') ? 'image/jpeg' : 'image/png';
+  const mime = options.format === 'jpg' || options.format === 'jpeg' ? 'image/jpeg' : 'image/png';
   return new Promise((resolve) => {
     canvas.toBlob((blob) => resolve(blob!), mime, 0.95);
   });

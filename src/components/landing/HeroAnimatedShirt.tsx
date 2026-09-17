@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState, Suspense } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, Float, ContactShadows, Decal } from '@react-three/drei';
+import React, { useRef, useEffect, Suspense } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useGLTF, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 import { useEditorStore } from '../../store/editorStore';
 
@@ -46,7 +46,7 @@ const AnimatedTShirt: React.FC = () => {
   }, [colors.body, materials]);
 
   // Smooth lerp animation loop on frame
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (!groupRef.current) return;
 
     // Smooth lerp for mouse parallax
@@ -63,9 +63,21 @@ const AnimatedTShirt: React.FC = () => {
     const targetRotY = mousePos.current.x * 0.75 + scrollRotY + Math.sin(time * 0.5) * 0.15;
     const targetRotZ = -mousePos.current.x * 0.15;
 
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotX, 0.08);
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotY, 0.08);
-    groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, targetRotZ, 0.08);
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(
+      groupRef.current.rotation.x,
+      targetRotX,
+      0.08
+    );
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(
+      groupRef.current.rotation.y,
+      targetRotY,
+      0.08
+    );
+    groupRef.current.rotation.z = THREE.MathUtils.lerp(
+      groupRef.current.rotation.z,
+      targetRotZ,
+      0.08
+    );
 
     // Subtle scale breathing & vertical float
     groupRef.current.position.y = Math.sin(time * 1.2) * 0.06;
@@ -105,7 +117,13 @@ export const HeroAnimatedShirt: React.FC = () => {
         <Suspense fallback={null}>
           {/* Dynamic Studio Lighting */}
           <ambientLight intensity={0.9} color="#ffffff" />
-          <directionalLight position={[4, 5, 5]} intensity={2.0} color="#ffffff" castShadow shadow-mapSize={1024} />
+          <directionalLight
+            position={[4, 5, 5]}
+            intensity={2.0}
+            color="#ffffff"
+            castShadow
+            shadow-mapSize={1024}
+          />
           <directionalLight position={[-4, 3, 2]} intensity={1.2} color="#a5b4fc" />
           <directionalLight position={[0, -3, -4]} intensity={0.8} color="#f43f5e" />
           <pointLight position={[0, 2, 2]} intensity={1.0} color="#ffffff" />

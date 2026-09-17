@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from 'react';
 import {
   Shirt,
   Sparkles,
@@ -17,9 +17,9 @@ import {
   CheckCircle2,
   ExternalLink,
   MousePointer2,
-} from "lucide-react";
-import { useEditorStore } from "../../store/editorStore";
-import { HeroAnimatedShirt } from "./HeroAnimatedShirt";
+} from 'lucide-react';
+import { useEditorStore } from '../../store/editorStore';
+import { HeroAnimatedShirt } from './HeroAnimatedShirt';
 
 export const LandingPage: React.FC = () => {
   const setActivePage = useEditorStore((s) => s.setActivePage);
@@ -29,39 +29,39 @@ export const LandingPage: React.FC = () => {
   const features = [
     {
       icon: <RotateCw className="w-6 h-6 text-primary-400" />,
-      title: "360° Real-Time 3D Studio",
+      title: '360° Real-Time 3D Studio',
       description:
-        "Interact with a photorealistic 3D garment model in any angle with smooth orbit damping and studio lighting presets.",
+        'Interact with a photorealistic 3D garment model in any angle with smooth orbit damping and studio lighting presets.',
     },
     {
       icon: <Layers className="w-6 h-6 text-success-400" />,
-      title: "Multi-Zone Artwork Placement",
+      title: 'Multi-Zone Artwork Placement',
       description:
-        "Design freely across Front Chest, Back Print, Left Sleeve, and Right Sleeve with live dynamic decal synchronization.",
+        'Design freely across Front Chest, Back Print, Left Sleeve, and Right Sleeve with live dynamic decal synchronization.',
     },
     {
       icon: <Type className="w-6 h-6 text-accent-400" />,
-      title: "Rich Typography & Curved Text",
+      title: 'Rich Typography & Curved Text',
       description:
-        "Curated Google Fonts with arched/curved text engine, customizable stroke outlines, and soft drop shadows.",
+        'Curated Google Fonts with arched/curved text engine, customizable stroke outlines, and soft drop shadows.',
     },
     {
       icon: <Download className="w-6 h-6 text-secondary-400" />,
-      title: "Layered PSD & 300 DPI Export",
+      title: 'Layered PSD & 300 DPI Export',
       description:
-        "Download manufacturing-ready layered Adobe Photoshop (.psd) files and 4K photorealistic 3D mockup snapshots.",
+        'Download manufacturing-ready layered Adobe Photoshop (.psd) files and 4K photorealistic 3D mockup snapshots.',
     },
     {
       icon: <Palette className="w-6 h-6 text-primary-400" />,
-      title: "Curated Color & Fabric Palettes",
+      title: 'Curated Color & Fabric Palettes',
       description:
-        "Experiment with curated apparel palettes and custom hex codes with photorealistic cotton weave shading.",
+        'Experiment with curated apparel palettes and custom hex codes with photorealistic cotton weave shading.',
     },
     {
       icon: <Smartphone className="w-6 h-6 text-success-400" />,
-      title: "Fully Mobile Optimized",
+      title: 'Fully Mobile Optimized',
       description:
-        "Seamless touch controls and an expandable bottom tool drawer for effortless designing on phones and tablets.",
+        'Seamless touch controls and an expandable bottom tool drawer for effortless designing on phones and tablets.',
     },
   ];
 
@@ -86,22 +86,21 @@ export const LandingPage: React.FC = () => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12]">
-              Design Custom Apparel in{" "}
+              Design Custom Apparel in{' '}
               <span className="bg-gradient-to-r from-primary-400 via-primary-300 to-secondary-400 bg-clip-text text-transparent">
                 Photorealistic 3D
               </span>
             </h1>
 
             <p className="text-sm sm:text-base text-surface-400 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
-              Rotate in 360°, import your graphics, customize typography with
-              curved text, and export layered Adobe PSD files & high-DPI
-              snapshots ready for manufacturing.
+              Rotate in 360°, import your graphics, customize typography with curved text, and
+              export layered Adobe PSD files & high-DPI snapshots ready for manufacturing.
             </p>
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
               <button
-                onClick={() => setActivePage("studio")}
+                onClick={() => setActivePage('studio')}
                 className="px-7 py-3.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold text-sm rounded-2xl shadow-xl shadow-primary-600/30 flex items-center gap-2.5 transition-all duration-200 hover:scale-105 active:scale-95"
               >
                 <span>Launch 3D Studio</span>
@@ -151,12 +150,10 @@ export const LandingPage: React.FC = () => {
             <div className="absolute bottom-4 left-4 right-4 p-3.5 bg-surface-950/80 backdrop-blur-md rounded-2xl border border-surface-800/90 flex items-center justify-between pointer-events-auto">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-success-400 animate-pulse" />
-                <span className="text-xs font-bold text-surface-200">
-                  Interactive 3D Preview
-                </span>
+                <span className="text-xs font-bold text-surface-200">Interactive 3D Preview</span>
               </div>
               <button
-                onClick={() => setActivePage("studio")}
+                onClick={() => setActivePage('studio')}
                 className="px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 text-white text-xs font-bold rounded-xl shadow-md shadow-primary-600/30 transition hover:scale-105 flex items-center gap-1.5"
               >
                 <span>Customize in Studio</span>
@@ -178,8 +175,7 @@ export const LandingPage: React.FC = () => {
             Built for Creators, Brands & Designers
           </h2>
           <p className="text-xs sm:text-sm text-surface-400">
-            A comprehensive design suite powered by modern WebGL and 2D canvas
-            technologies.
+            A comprehensive design suite powered by modern WebGL and 2D canvas technologies.
           </p>
         </div>
 
@@ -195,9 +191,7 @@ export const LandingPage: React.FC = () => {
               <h3 className="text-base font-bold text-surface-100 group-hover:text-primary-300 transition-colors">
                 {f.title}
               </h3>
-              <p className="text-xs sm:text-sm text-surface-400 leading-relaxed">
-                {f.description}
-              </p>
+              <p className="text-xs sm:text-sm text-surface-400 leading-relaxed">{f.description}</p>
             </div>
           ))}
         </div>
@@ -208,15 +202,11 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-4xl mx-auto bg-gradient-to-tr from-surface-900 to-surface-950 border border-surface-800 rounded-3xl p-8 sm:p-10 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-8">
           <div className="space-y-3 text-center sm:text-left">
             <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary-400 uppercase tracking-wider">
-              Made with{" "}
-              <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+              Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
             </div>
-            <h3 className="text-2xl font-black text-white">
-              Created by Jeric Nuez
-            </h3>
+            <h3 className="text-2xl font-black text-white">Created by Jeric Nuez</h3>
             <p className="text-xs sm:text-sm text-surface-400 max-w-md">
-              If you enjoy using this tool, consider supporting the project with
-              a coffee!
+              If you enjoy using this tool, consider supporting the project with a coffee!
             </p>
           </div>
 
@@ -253,24 +243,20 @@ export const LandingPage: React.FC = () => {
               <Shirt className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold text-surface-200">
-                3D T-Shirt Customizer Studio
-              </span>
-              <p className="text-[11px] text-surface-500">
-                © 2026 Jeric Nuez. Open Source.
-              </p>
+              <span className="font-bold text-surface-200">3D T-Shirt Customizer Studio</span>
+              <p className="text-[11px] text-surface-500">© 2026 Jeric Nuez. Open Source.</p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-surface-400">
             <button
-              onClick={() => setActivePage("studio")}
+              onClick={() => setActivePage('studio')}
               className="hover:text-primary-400 transition"
             >
               3D Studio
             </button>
             <button
-              onClick={() => setActivePage("changelog")}
+              onClick={() => setActivePage('changelog')}
               className="hover:text-primary-400 transition flex items-center gap-1"
             >
               <GitCommit className="w-3.5 h-3.5" />

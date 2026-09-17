@@ -1,11 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { 
-  UploadCloud, 
-  FlipHorizontal, 
-  FlipVertical, 
-  Sliders, 
-  Sparkles 
-} from 'lucide-react';
+import { UploadCloud, FlipHorizontal, FlipVertical, Sliders, Sparkles } from 'lucide-react';
 import { useEditorStore } from '../../../store/editorStore';
 import { ImageLayer } from '../../../types/editor';
 
@@ -35,14 +29,15 @@ const SAMPLE_GRAPHICS = [
 export const ImageUploadTab: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
-  
+
   const activeZone = useEditorStore((s) => s.activeZone);
   const selectedLayerId = useEditorStore((s) => s.selectedLayerId);
   const layers = useEditorStore((s) => s.layers);
   const addLayer = useEditorStore((s) => s.addLayer);
   const updateLayer = useEditorStore((s) => s.updateLayer);
 
-  const selectedLayer = layers.find((l) => l.id === selectedLayerId && l.type === 'image') as ImageLayer | undefined;
+  const selectedLayer = layers.find((l) => l.id === selectedLayerId && l.type === 'image') as
+    ImageLayer | undefined;
 
   const processFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
@@ -92,7 +87,7 @@ export const ImageUploadTab: React.FC = () => {
     if (file) processFile(file);
   };
 
-  const addPresetGraphic = (graphic: typeof SAMPLE_GRAPHICS[0]) => {
+  const addPresetGraphic = (graphic: (typeof SAMPLE_GRAPHICS)[0]) => {
     addLayer({
       name: graphic.name,
       type: 'image',
@@ -158,7 +153,9 @@ export const ImageUploadTab: React.FC = () => {
                 onClick={() => updateLayer(selectedLayer.id, { flipX: !selectedLayer.flipX })}
                 title="Flip Horizontal"
                 className={`p-1.5 rounded-lg border text-xs ${
-                  selectedLayer.flipX ? 'bg-primary-600 border-primary-500 text-white' : 'bg-surface-800 border-surface-700 text-surface-300'
+                  selectedLayer.flipX
+                    ? 'bg-primary-600 border-primary-500 text-white'
+                    : 'bg-surface-800 border-surface-700 text-surface-300'
                 }`}
               >
                 <FlipHorizontal className="w-3.5 h-3.5" />
@@ -167,7 +164,9 @@ export const ImageUploadTab: React.FC = () => {
                 onClick={() => updateLayer(selectedLayer.id, { flipY: !selectedLayer.flipY })}
                 title="Flip Vertical"
                 className={`p-1.5 rounded-lg border text-xs ${
-                  selectedLayer.flipY ? 'bg-primary-600 border-primary-500 text-white' : 'bg-surface-800 border-surface-700 text-surface-300'
+                  selectedLayer.flipY
+                    ? 'bg-primary-600 border-primary-500 text-white'
+                    : 'bg-surface-800 border-surface-700 text-surface-300'
                 }`}
               >
                 <FlipVertical className="w-3.5 h-3.5" />
@@ -204,7 +203,9 @@ export const ImageUploadTab: React.FC = () => {
               max="1.0"
               step="0.05"
               value={selectedLayer.opacity}
-              onChange={(e) => updateLayer(selectedLayer.id, { opacity: parseFloat(e.target.value) })}
+              onChange={(e) =>
+                updateLayer(selectedLayer.id, { opacity: parseFloat(e.target.value) })
+              }
               className="w-full accent-primary-500 cursor-pointer h-1.5 bg-surface-800 rounded-lg"
             />
           </div>
@@ -221,7 +222,9 @@ export const ImageUploadTab: React.FC = () => {
               max="180"
               step="1"
               value={selectedLayer.rotation}
-              onChange={(e) => updateLayer(selectedLayer.id, { rotation: parseInt(e.target.value) })}
+              onChange={(e) =>
+                updateLayer(selectedLayer.id, { rotation: parseInt(e.target.value) })
+              }
               className="w-full accent-primary-500 cursor-pointer h-1.5 bg-surface-800 rounded-lg"
             />
           </div>

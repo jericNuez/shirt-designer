@@ -66,10 +66,7 @@ export interface BadgeLayer extends BaseLayer {
 export type DesignLayer = ImageLayer | TextLayer | ShapeLayer | BadgeLayer;
 
 export type LayerInput =
-  | Omit<ImageLayer, 'id'>
-  | Omit<TextLayer, 'id'>
-  | Omit<ShapeLayer, 'id'>
-  | Omit<BadgeLayer, 'id'>;
+  Omit<ImageLayer, 'id'> | Omit<TextLayer, 'id'> | Omit<ShapeLayer, 'id'> | Omit<BadgeLayer, 'id'>;
 
 export interface ProjectData {
   version: string;

@@ -1,13 +1,5 @@
 import React from 'react';
-import { 
-  Palette, 
-  UploadCloud, 
-  Type, 
-  Shapes, 
-  Layers, 
-  ChevronUp, 
-  ChevronDown 
-} from 'lucide-react';
+import { Palette, UploadCloud, Type, Shapes, Layers, ChevronUp, ChevronDown } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 import { GarmentColorTab } from './tabs/GarmentColorTab';
 import { ImageUploadTab } from './tabs/ImageUploadTab';
@@ -21,9 +13,9 @@ interface EditorSidebarProps {
   onToggleMobile?: () => void;
 }
 
-export const EditorSidebar: React.FC<EditorSidebarProps> = ({ 
-  isMobileOpen = true, 
-  onToggleMobile 
+export const EditorSidebar: React.FC<EditorSidebarProps> = ({
+  isMobileOpen = true,
+  onToggleMobile,
 }) => {
   const activeTab = useEditorStore((s) => s.activeTab);
   const setActiveTab = useEditorStore((s) => s.setActiveTab);
@@ -46,15 +38,13 @@ export const EditorSidebar: React.FC<EditorSidebarProps> = ({
       }`}
     >
       {/* Mobile Drawer Toggle Header */}
-      <div 
+      <div
         onClick={onToggleMobile}
         className="lg:hidden flex items-center justify-between px-4 py-2.5 bg-surface-900 border-b border-surface-800 cursor-pointer select-none"
       >
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-          <span className="text-xs font-bold text-surface-200">
-            Design Studio Controls & Tools
-          </span>
+          <span className="text-xs font-bold text-surface-200">Design Studio Controls & Tools</span>
           <span className="text-[10px] bg-primary-500/20 text-primary-300 px-2 py-0.5 rounded-full capitalize">
             {activeTab}
           </span>

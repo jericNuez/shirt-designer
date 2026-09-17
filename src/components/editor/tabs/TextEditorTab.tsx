@@ -1,12 +1,5 @@
 import React from 'react';
-import { 
-  Type, 
-  Plus, 
-  Sparkles, 
-  Sliders, 
-  Italic, 
-  Bold 
-} from 'lucide-react';
+import { Plus, Sparkles, Sliders, Italic, Bold } from 'lucide-react';
 import { useEditorStore } from '../../../store/editorStore';
 import { TextLayer } from '../../../types/editor';
 
@@ -80,7 +73,8 @@ export const TextEditorTab: React.FC = () => {
   const addLayer = useEditorStore((s) => s.addLayer);
   const updateLayer = useEditorStore((s) => s.updateLayer);
 
-  const selectedLayer = layers.find((l) => l.id === selectedLayerId && l.type === 'text') as TextLayer | undefined;
+  const selectedLayer = layers.find((l) => l.id === selectedLayerId && l.type === 'text') as
+    TextLayer | undefined;
 
   const handleAddNewText = () => {
     addLayer({
@@ -115,7 +109,7 @@ export const TextEditorTab: React.FC = () => {
     });
   };
 
-  const applyPreset = (preset: typeof TEXT_PRESETS[0]) => {
+  const applyPreset = (preset: (typeof TEXT_PRESETS)[0]) => {
     addLayer({
       name: preset.name,
       type: 'text',
@@ -240,7 +234,9 @@ export const TextEditorTab: React.FC = () => {
                   onChange={(e) => updateLayer(selectedLayer.id, { fillColor: e.target.value })}
                   className="w-7 h-7 rounded-lg cursor-pointer bg-transparent border-0"
                 />
-                <span className="text-[11px] font-mono text-surface-300 uppercase">{selectedLayer.fillColor}</span>
+                <span className="text-[11px] font-mono text-surface-300 uppercase">
+                  {selectedLayer.fillColor}
+                </span>
               </div>
             </div>
 
@@ -258,7 +254,9 @@ export const TextEditorTab: React.FC = () => {
                   min="0"
                   max="10"
                   value={selectedLayer.strokeWidth}
-                  onChange={(e) => updateLayer(selectedLayer.id, { strokeWidth: parseInt(e.target.value) })}
+                  onChange={(e) =>
+                    updateLayer(selectedLayer.id, { strokeWidth: parseInt(e.target.value) })
+                  }
                   className="w-16 accent-primary-500 cursor-pointer h-1.5 bg-surface-800 rounded-lg"
                   title="Outline thickness"
                 />
@@ -294,7 +292,9 @@ export const TextEditorTab: React.FC = () => {
                   max="600"
                   step="10"
                   value={selectedLayer.curveRadius}
-                  onChange={(e) => updateLayer(selectedLayer.id, { curveRadius: parseInt(e.target.value) })}
+                  onChange={(e) =>
+                    updateLayer(selectedLayer.id, { curveRadius: parseInt(e.target.value) })
+                  }
                   className="w-full accent-primary-500 cursor-pointer h-1.5 bg-surface-800 rounded-lg"
                 />
               </div>
@@ -313,7 +313,9 @@ export const TextEditorTab: React.FC = () => {
                 min="14"
                 max="120"
                 value={selectedLayer.fontSize}
-                onChange={(e) => updateLayer(selectedLayer.id, { fontSize: parseInt(e.target.value) })}
+                onChange={(e) =>
+                  updateLayer(selectedLayer.id, { fontSize: parseInt(e.target.value) })
+                }
                 className="w-full accent-primary-500 cursor-pointer h-1.5 bg-surface-800 rounded-lg"
               />
             </div>
@@ -328,7 +330,9 @@ export const TextEditorTab: React.FC = () => {
                 min="-2"
                 max="24"
                 value={selectedLayer.letterSpacing}
-                onChange={(e) => updateLayer(selectedLayer.id, { letterSpacing: parseInt(e.target.value) })}
+                onChange={(e) =>
+                  updateLayer(selectedLayer.id, { letterSpacing: parseInt(e.target.value) })
+                }
                 className="w-full accent-primary-500 cursor-pointer h-1.5 bg-surface-800 rounded-lg"
               />
             </div>

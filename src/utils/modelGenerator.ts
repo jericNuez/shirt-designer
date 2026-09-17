@@ -8,32 +8,32 @@ export function generateFabricTexture(): {
   roughnessMap: THREE.CanvasTexture;
 } {
   const size = 512;
-  
+
   // 1. Normal Map Canvas (fine cross-hatch fabric weave)
   const nCanvas = document.createElement('canvas');
   nCanvas.width = size;
   nCanvas.height = size;
   const nCtx = nCanvas.getContext('2d');
-  
+
   if (nCtx) {
     const imgData = nCtx.createImageData(size, size);
     for (let y = 0; y < size; y++) {
       for (let x = 0; x < size; x++) {
         const i = (y * size + x) * 4;
-        
+
         // Fine thread pattern
         const freq = 0.5;
         const weave1 = Math.sin(x * freq) * Math.cos(y * freq);
         const weave2 = Math.cos((x + y) * freq * 0.5) * 0.5;
         const noise = (Math.random() - 0.5) * 0.15;
-        
+
         const total = (weave1 + weave2 + noise) * 0.5;
-        
+
         // Normal vectors: RGB mapped from [-1..1] to [0..255]
         const nx = Math.sin(total * Math.PI) * 0.5 + 0.5;
         const ny = Math.cos(total * Math.PI) * 0.5 + 0.5;
         const nz = 0.9;
-        
+
         imgData.data[i] = Math.floor(nx * 255);
         imgData.data[i + 1] = Math.floor(ny * 255);
         imgData.data[i + 2] = Math.floor(nz * 255);
@@ -42,7 +42,7 @@ export function generateFabricTexture(): {
     }
     nCtx.putImageData(imgData, 0, 0);
   }
-  
+
   const normalMap = new THREE.CanvasTexture(nCanvas);
   normalMap.wrapS = THREE.RepeatWrapping;
   normalMap.wrapT = THREE.RepeatWrapping;
@@ -81,26 +81,26 @@ export function generateFabricTexture(): {
 export function createTShirtGeometries() {
   // Body Mesh (Smooth tailored torso)
   const bodyShape = new THREE.Shape();
-  
+
   // Define T-shirt body outline profile
-  const wTop = 1.35;    // Shoulder width half
-  const wChest = 1.25;  // Chest width half
-  const wWaist = 1.15;  // Waist width half
+  const wTop = 1.35; // Shoulder width half
+  const wChest = 1.25; // Chest width half
+  const wWaist = 1.15; // Waist width half
   const wBottom = 1.25; // Bottom hem width half
-  const hTop = 1.65;    // Shoulder height
-  const hNeck = 1.35;   // Front neck drop
+  const hTop = 1.65; // Shoulder height
+  const hNeck = 1.35; // Front neck drop
   const hBottom = -1.6; // Bottom hem
 
   // Front curve
   bodyShape.moveTo(-0.45, hNeck);
   bodyShape.quadraticCurveTo(0, hNeck - 0.25, 0.45, hNeck); // Neckline scoop
-  bodyShape.lineTo(wTop, hTop);                              // Right shoulder
+  bodyShape.lineTo(wTop, hTop); // Right shoulder
   bodyShape.quadraticCurveTo(wChest + 0.05, 0.8, wChest, 0.5); // Underarm
-  bodyShape.quadraticCurveTo(wWaist, -0.5, wBottom, hBottom);  // Right side torso
+  bodyShape.quadraticCurveTo(wWaist, -0.5, wBottom, hBottom); // Right side torso
   bodyShape.quadraticCurveTo(0, hBottom - 0.08, -wBottom, hBottom); // Bottom hem curve
-  bodyShape.quadraticCurveTo(-wWaist, -0.5, -wChest, 0.5);   // Left side torso
+  bodyShape.quadraticCurveTo(-wWaist, -0.5, -wChest, 0.5); // Left side torso
   bodyShape.quadraticCurveTo(-wChest - 0.05, 0.8, -wTop, hTop); // Left underarm
-  bodyShape.lineTo(-0.45, hNeck);                            // Left shoulder to neck
+  bodyShape.lineTo(-0.45, hNeck); // Left shoulder to neck
 
   // Extrude with smooth bevel to create 3D garment volume
   const extrudeSettings: THREE.ExtrudeGeometryOptions = {

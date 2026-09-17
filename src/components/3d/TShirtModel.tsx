@@ -8,7 +8,7 @@ import { renderLayersToCanvas } from '../../utils/canvasRenderer';
 
 export const TShirtModel: React.FC = () => {
   const groupRef = useRef<THREE.Group>(null);
-  
+
   // Load user's GLB model
   const { nodes, materials } = useGLTF('/models/shirt_model.glb') as any;
 
@@ -16,7 +16,7 @@ export const TShirtModel: React.FC = () => {
   const colors = useEditorStore((s) => s.colors);
   const fabric = useEditorStore((s) => s.fabric);
   const layers = useEditorStore((s) => s.layers);
-  
+
   const isTurntableActive = useSceneStore((s) => s.isTurntableActive);
   const turntableSpeed = useSceneStore((s) => s.turntableSpeed);
   const wireframe = useSceneStore((s) => s.wireframe);
@@ -108,12 +108,7 @@ export const TShirtModel: React.FC = () => {
 
   return (
     <group ref={groupRef} position={[0, 0, 0]} scale={2.8} dispose={null}>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={shirtMesh.geometry}
-        material={materials.lambert1}
-      >
+      <mesh castShadow receiveShadow geometry={shirtMesh.geometry} material={materials.lambert1}>
         {/* Front Chest Decal */}
         {hasFront && (
           <Decal

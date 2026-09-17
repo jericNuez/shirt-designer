@@ -2,7 +2,8 @@ import { create } from 'zustand';
 
 export type CameraPreset = 'front' | 'back' | 'sleeve_left' | 'sleeve_right' | 'isometric' | 'hero';
 
-export type LightingPreset = 'studio_clean' | 'warm_sunset' | 'cyber_neon' | 'daylight' | 'dramatic';
+export type LightingPreset =
+  'studio_clean' | 'warm_sunset' | 'cyber_neon' | 'daylight' | 'dramatic';
 
 export type ViewportBackground = 'studio_dark' | 'transparent' | 'gradient' | 'clean_white';
 
@@ -15,7 +16,7 @@ interface SceneState {
   wireframe: boolean;
   fov: number;
   zoomLevel: number;
-  
+
   // Actions
   setCameraPreset: (preset: CameraPreset) => void;
   setLightingPreset: (preset: LightingPreset) => void;

@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
-import { 
-  X, 
-  Save, 
-  Upload, 
-  FolderOpen, 
-  Download, 
-  RotateCcw, 
-  HardDrive, 
-  FileCode 
+import {
+  X,
+  Save,
+  Upload,
+  FolderOpen,
+  Download,
+  RotateCcw,
+  HardDrive,
+  FileCode,
 } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 import { downloadFile } from '../../utils/imageExporter';
@@ -99,7 +99,9 @@ export const ProjectSaveModal: React.FC = () => {
             </div>
             <div>
               <h2 className="text-base font-bold">Project Save & Load</h2>
-              <p className="text-xs text-surface-400">Save your work as a file or sync with local storage</p>
+              <p className="text-xs text-surface-400">
+                Save your work as a file or sync with local storage
+              </p>
             </div>
           </div>
           <button
@@ -129,8 +131,12 @@ export const ProjectSaveModal: React.FC = () => {
                 <FileCode className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-xs font-bold text-surface-200">Export Project File (.JSON)</div>
-                <div className="text-[11px] text-surface-400">Download portable project file to keep or share</div>
+                <div className="text-xs font-bold text-surface-200">
+                  Export Project File (.JSON)
+                </div>
+                <div className="text-[11px] text-surface-400">
+                  Download portable project file to keep or share
+                </div>
               </div>
             </div>
             <Download className="w-4 h-4 text-surface-500 group-hover:text-primary-400" />
@@ -147,7 +153,9 @@ export const ProjectSaveModal: React.FC = () => {
               </div>
               <div>
                 <div className="text-xs font-bold text-surface-200">Open Project File (.JSON)</div>
-                <div className="text-[11px] text-surface-400">Resume a previously exported design</div>
+                <div className="text-[11px] text-surface-400">
+                  Resume a previously exported design
+                </div>
               </div>
             </div>
             <FolderOpen className="w-4 h-4 text-surface-500 group-hover:text-success-400" />
@@ -164,7 +172,9 @@ export const ProjectSaveModal: React.FC = () => {
               </div>
               <div>
                 <div className="text-xs font-bold text-surface-200">Save to Browser Storage</div>
-                <div className="text-[11px] text-surface-400">Quickly save state in this browser session</div>
+                <div className="text-[11px] text-surface-400">
+                  Quickly save state in this browser session
+                </div>
               </div>
             </div>
             <Save className="w-4 h-4 text-surface-500 group-hover:text-accent-400" />
@@ -181,7 +191,9 @@ export const ProjectSaveModal: React.FC = () => {
               </div>
               <div>
                 <div className="text-xs font-bold text-surface-200">Restore Browser Save</div>
-                <div className="text-[11px] text-surface-400">Restore the last auto-saved state</div>
+                <div className="text-[11px] text-surface-400">
+                  Restore the last auto-saved state
+                </div>
               </div>
             </div>
             <FolderOpen className="w-4 h-4 text-surface-500 group-hover:text-secondary-400" />

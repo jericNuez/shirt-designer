@@ -1,14 +1,14 @@
 import React from 'react';
-import { 
-  Shapes, 
-  Sparkles, 
-  Shield, 
-  Heart, 
-  Star, 
-  Circle, 
-  Square, 
+import {
+  Shapes,
+  Sparkles,
+  Shield,
+  Heart,
+  Star,
+  Circle,
+  Square,
   Award,
-  Sliders
+  Sliders,
 } from 'lucide-react';
 import { useEditorStore } from '../../../store/editorStore';
 import { ShapeLayer } from '../../../types/editor';
@@ -56,7 +56,8 @@ export const ClipartTab: React.FC = () => {
   const addLayer = useEditorStore((s) => s.addLayer);
   const updateLayer = useEditorStore((s) => s.updateLayer);
 
-  const selectedShape = layers.find((l) => l.id === selectedLayerId && l.type === 'shape') as ShapeLayer | undefined;
+  const selectedShape = layers.find((l) => l.id === selectedLayerId && l.type === 'shape') as
+    ShapeLayer | undefined;
 
   const handleAddShape = (shapeType: ShapeLayer['shapeType']) => {
     addLayer({
@@ -79,7 +80,7 @@ export const ClipartTab: React.FC = () => {
     });
   };
 
-  const handleAddVectorIcon = (icon: typeof VECTOR_ICONS[0]) => {
+  const handleAddVectorIcon = (icon: (typeof VECTOR_ICONS)[0]) => {
     addLayer({
       name: icon.name,
       type: 'image',
@@ -121,7 +122,9 @@ export const ClipartTab: React.FC = () => {
                   onChange={(e) => updateLayer(selectedShape.id, { fillColor: e.target.value })}
                   className="w-7 h-7 rounded-lg cursor-pointer bg-transparent border-0"
                 />
-                <span className="text-[11px] font-mono text-surface-300 uppercase">{selectedShape.fillColor}</span>
+                <span className="text-[11px] font-mono text-surface-300 uppercase">
+                  {selectedShape.fillColor}
+                </span>
               </div>
             </div>
 
@@ -139,7 +142,9 @@ export const ClipartTab: React.FC = () => {
                   min="0"
                   max="12"
                   value={selectedShape.strokeWidth}
-                  onChange={(e) => updateLayer(selectedShape.id, { strokeWidth: parseInt(e.target.value) })}
+                  onChange={(e) =>
+                    updateLayer(selectedShape.id, { strokeWidth: parseInt(e.target.value) })
+                  }
                   className="w-16 accent-primary-500 cursor-pointer h-1.5 bg-surface-800 rounded-lg"
                 />
               </div>

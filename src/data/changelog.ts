@@ -23,19 +23,23 @@ export const CHANGELOG_DATA: ChangelogEntry[] = [
     highlights: [
       {
         type: 'feature',
-        description: 'Interactive Landing Page featuring a live 3D garment that smoothly animates with cursor movement and page scrolling.',
+        description:
+          'Interactive Landing Page featuring a live 3D garment that smoothly animates with cursor movement and page scrolling.',
       },
       {
         type: 'feature',
-        description: 'In-app User Feedback popup with 5-star ratings, feedback categories, and smart post-export prompts.',
+        description:
+          'In-app User Feedback popup with 5-star ratings, feedback categories, and smart post-export prompts.',
       },
       {
         type: 'improvement',
-        description: 'Direct 1:1 window pointer tracking for ultra-smooth moving, scaling, and rotating on the 2D design canvas.',
+        description:
+          'Direct 1:1 window pointer tracking for ultra-smooth moving, scaling, and rotating on the 2D design canvas.',
       },
       {
         type: 'fix',
-        description: 'Fixed PSD export so custom vector shapes (stars, shields, hearts) and curved text render accurately into isolated Photoshop layers.',
+        description:
+          'Fixed PSD export so custom vector shapes (stars, shields, hearts) and curved text render accurately into isolated Photoshop layers.',
       },
     ],
   },
@@ -49,15 +53,18 @@ export const CHANGELOG_DATA: ChangelogEntry[] = [
     highlights: [
       {
         type: 'feature',
-        description: 'High-fidelity photorealistic 3D garment model with realistic cloth drape, ribbed collar, and sleeve contours.',
+        description:
+          'High-fidelity photorealistic 3D garment model with realistic cloth drape, ribbed collar, and sleeve contours.',
       },
       {
         type: 'feature',
-        description: 'Responsive mobile bottom drawer interface for designing seamlessly on smartphones and tablets.',
+        description:
+          'Responsive mobile bottom drawer interface for designing seamlessly on smartphones and tablets.',
       },
       {
         type: 'improvement',
-        description: 'Streamlined 3D viewport controls and automatic camera alignment when switching garment zones.',
+        description:
+          'Streamlined 3D viewport controls and automatic camera alignment when switching garment zones.',
       },
       {
         type: 'fix',
@@ -75,23 +82,28 @@ export const CHANGELOG_DATA: ChangelogEntry[] = [
     highlights: [
       {
         type: 'feature',
-        description: '360° interactive 3D Garment Studio with orbit rotation, pan, zoom, and 5 studio lighting environments.',
+        description:
+          '360° interactive 3D Garment Studio with orbit rotation, pan, zoom, and 5 studio lighting environments.',
       },
       {
         type: 'feature',
-        description: 'Multi-zone design customization for Front Chest, Back Print, Left Sleeve, and Right Sleeve.',
+        description:
+          'Multi-zone design customization for Front Chest, Back Print, Left Sleeve, and Right Sleeve.',
       },
       {
         type: 'feature',
-        description: 'Rich typography engine with Google Fonts, curved/arched text, outline strokes, and drop shadows.',
+        description:
+          'Rich typography engine with Google Fonts, curved/arched text, outline strokes, and drop shadows.',
       },
       {
         type: 'feature',
-        description: 'Multi-format export engine supporting high-resolution PNG/JPG snapshots and layered Adobe Photoshop (.psd) files.',
+        description:
+          'Multi-format export engine supporting high-resolution PNG/JPG snapshots and layered Adobe Photoshop (.psd) files.',
       },
       {
         type: 'feature',
-        description: 'Project state management with full Undo/Redo history and browser local storage persistence.',
+        description:
+          'Project state management with full Undo/Redo history and browser local storage persistence.',
       },
     ],
   },

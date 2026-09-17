@@ -75,16 +75,18 @@ export const App: React.FC = () => {
 
         {activePage === 'studio' && (
           <div className="w-full h-full flex flex-col-reverse lg:flex-row overflow-hidden relative">
-            <EditorSidebar 
-              isMobileOpen={isMobileDrawerOpen} 
-              onToggleMobile={() => setIsMobileDrawerOpen((prev) => !prev)} 
+            <EditorSidebar
+              isMobileOpen={isMobileDrawerOpen}
+              onToggleMobile={() => setIsMobileDrawerOpen((prev) => !prev)}
             />
 
             <main className="flex-1 h-full min-h-0 flex overflow-hidden relative bg-surface-950">
               {(viewMode === '3d' || viewMode === 'split') && (
                 <div
                   className={`h-full relative transition-all duration-300 ${
-                    viewMode === 'split' ? 'w-full lg:w-1/2 border-r border-surface-800/80' : 'w-full'
+                    viewMode === 'split'
+                      ? 'w-full lg:w-1/2 border-r border-surface-800/80'
+                      : 'w-full'
                   }`}
                 >
                   <StudioScene canvasRef={canvas3DRef} />

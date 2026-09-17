@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  MessageSquareHeart, 
-  Star, 
-  Send, 
-  Sparkles, 
-  CheckCircle2, 
-  Bug, 
-  Zap, 
-  Heart, 
-  Coffee,
+import {
+  X,
+  MessageSquareHeart,
+  Star,
+  CheckCircle2,
+  Bug,
+  Zap,
+  Heart,
   Github,
   ExternalLink,
-  Save
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useEditorStore } from '../../store/editorStore';
@@ -25,7 +21,9 @@ export const FeedbackModal: React.FC = () => {
 
   const [rating, setRating] = useState<number>(5);
   const [hoverRating, setHoverRating] = useState<number>(0);
-  const [category, setCategory] = useState<'compliment' | 'feature' | 'bug' | 'general'>('compliment');
+  const [category, setCategory] = useState<'compliment' | 'feature' | 'bug' | 'general'>(
+    'compliment'
+  );
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,10 +31,30 @@ export const FeedbackModal: React.FC = () => {
   if (!isOpen) return null;
 
   const categories = [
-    { id: 'compliment', label: 'Love it! / Praise', icon: <Heart className="w-3.5 h-3.5 text-rose-400" />, labelTag: 'feedback' },
-    { id: 'feature', label: 'Feature Request', icon: <Zap className="w-3.5 h-3.5 text-accent-400" />, labelTag: 'enhancement' },
-    { id: 'bug', label: 'Bug Report', icon: <Bug className="w-3.5 h-3.5 text-danger-400" />, labelTag: 'bug' },
-    { id: 'general', label: 'General Thoughts', icon: <MessageSquareHeart className="w-3.5 h-3.5 text-primary-400" />, labelTag: 'feedback' },
+    {
+      id: 'compliment',
+      label: 'Love it! / Praise',
+      icon: <Heart className="w-3.5 h-3.5 text-rose-400" />,
+      labelTag: 'feedback',
+    },
+    {
+      id: 'feature',
+      label: 'Feature Request',
+      icon: <Zap className="w-3.5 h-3.5 text-accent-400" />,
+      labelTag: 'enhancement',
+    },
+    {
+      id: 'bug',
+      label: 'Bug Report',
+      icon: <Bug className="w-3.5 h-3.5 text-danger-400" />,
+      labelTag: 'bug',
+    },
+    {
+      id: 'general',
+      label: 'General Thoughts',
+      icon: <MessageSquareHeart className="w-3.5 h-3.5 text-primary-400" />,
+      labelTag: 'feedback',
+    },
   ];
 
   const ratingDescriptions: Record<number, string> = {
@@ -71,11 +89,12 @@ export const FeedbackModal: React.FC = () => {
     const catLabel = selectedCat ? selectedCat.label : 'Feedback';
     const stars = '⭐'.repeat(rating);
 
-    const titlePrefix = category === 'bug' 
-      ? '[Bug Report]' 
-      : category === 'feature' 
-      ? '[Feature Request]' 
-      : '[User Feedback]';
+    const titlePrefix =
+      category === 'bug'
+        ? '[Bug Report]'
+        : category === 'feature'
+          ? '[Feature Request]'
+          : '[User Feedback]';
 
     const shortSummary = message.slice(0, 50).trim() || 'New User Feedback';
     const title = `${titlePrefix} ${shortSummary}${message.length > 50 ? '...' : ''}`;
@@ -141,29 +160,6 @@ ${message}
       setEmail('');
       setOpen(false);
     }, 2500);
-  };
-
-  const handleLocalSubmitOnly = () => {
-    if (!message.trim()) {
-      alert('Please enter your feedback message.');
-      return;
-    }
-
-    saveFeedbackLocally();
-
-    confetti({
-      particleCount: 50,
-      spread: 50,
-      origin: { y: 0.6 },
-    });
-
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setMessage('');
-      setEmail('');
-      setOpen(false);
-    }, 2000);
   };
 
   return (
@@ -289,39 +285,28 @@ ${message}
             <div className="flex items-center gap-2 p-2.5 rounded-xl bg-surface-950/40 border border-surface-800 text-[11px] text-surface-400">
               <Github className="w-4 h-4 text-surface-300 shrink-0" />
               <span>
-                Submitting opens a formatted issue on GitHub for transparent tracking and quick resolution.
+                Submitting opens a formatted issue on GitHub for transparent tracking and quick
+                resolution.
               </span>
             </div>
 
             {/* Submit Actions */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+            <div className="flex items-center justify-end gap-3 pt-2">
               <button
                 type="button"
-                onClick={handleLocalSubmitOnly}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-semibold text-surface-400 hover:text-white hover:bg-surface-800 border border-surface-700/60 flex items-center justify-center gap-1.5 transition"
-                title="Save without opening GitHub"
+                onClick={() => setOpen(false)}
+                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-surface-400 hover:text-white hover:bg-surface-800 transition"
               >
-                <Save className="w-3.5 h-3.5" />
-                <span>Save Offline</span>
+                Cancel
               </button>
-
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-xs font-semibold text-surface-400 hover:text-white hover:bg-surface-800 transition flex-1 sm:flex-initial"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 flex-1 sm:flex-initial"
-                >
-                  <Github className="w-3.5 h-3.5" />
-                  <span>Submit to GitHub</span>
-                  <ExternalLink className="w-3 h-3 opacity-75" />
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95"
+              >
+                <Github className="w-3.5 h-3.5" />
+                <span>Submit to GitHub</span>
+                <ExternalLink className="w-3 h-3 opacity-75" />
+              </button>
             </div>
           </form>
         )}

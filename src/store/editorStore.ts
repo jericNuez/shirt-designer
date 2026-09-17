@@ -12,12 +12,12 @@ interface EditorState {
   // Garment Config
   colors: ShirtColorConfig;
   fabric: FabricConfig;
-  
+
   // Zones & Layers
   activeZone: DesignZone;
   selectedLayerId: string | null;
   layers: DesignLayer[];
-  
+
   // History for Undo/Redo
   history: {
     past: DesignLayer[][];
@@ -29,7 +29,7 @@ interface EditorState {
   isExportModalOpen: boolean;
   isProjectModalOpen: boolean;
   isFeedbackModalOpen: boolean;
-  
+
   // Actions
   setActiveZone: (zone: DesignZone) => void;
   setSelectedLayerId: (id: string | null) => void;
@@ -37,9 +37,12 @@ interface EditorState {
   setExportModalOpen: (open: boolean) => void;
   setProjectModalOpen: (open: boolean) => void;
   setFeedbackModalOpen: (open: boolean) => void;
-  
+
   // Garment Actions
-  setColor: (part: 'body' | 'collar' | 'sleevesLeft' | 'sleevesRight' | 'all', color: string) => void;
+  setColor: (
+    part: 'body' | 'collar' | 'sleevesLeft' | 'sleevesRight' | 'all',
+    color: string
+  ) => void;
   setUnifiedColor: (unified: boolean) => void;
   setFabricType: (type: FabricConfig['type']) => void;
 
@@ -56,7 +59,7 @@ interface EditorState {
   // History Actions
   undo: () => void;
   redo: () => void;
-  
+
   // Project Actions
   loadProject: (project: ProjectData) => void;
   resetProject: () => void;
@@ -122,7 +125,7 @@ const INITIAL_LAYERS: DesignLayer[] = [
     strokeColor: '#000000',
     strokeWidth: 2,
     x: 0.5,
-    y: 0.60,
+    y: 0.6,
     scale: 0.8,
     rotation: 0,
     opacity: 0.9,
@@ -161,7 +164,7 @@ const INITIAL_LAYERS: DesignLayer[] = [
     flipY: false,
     locked: false,
     visible: true,
-  }
+  },
 ];
 
 export const useEditorStore = create<EditorState>((set, get) => ({
@@ -249,7 +252,9 @@ export const useEditorStore = create<EditorState>((set, get) => ({
 
   updateLayer: (id, updates) => {
     set((state) => {
-      const newLayers = state.layers.map((l) => (l.id === id ? ({ ...l, ...updates } as DesignLayer) : l));
+      const newLayers = state.layers.map((l) =>
+        l.id === id ? ({ ...l, ...updates } as DesignLayer) : l
+      );
       return {
         layers: newLayers,
       };

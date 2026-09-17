@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Shirt,
   Undo2,
@@ -10,15 +10,12 @@ import {
   LayoutTemplate,
   Coffee,
   MessageSquareHeart,
-  GitCommit,
-  Home,
-  Sparkles,
-} from "lucide-react";
-import { useEditorStore, AppPage } from "../../store/editorStore";
+} from 'lucide-react';
+import { useEditorStore } from '../../store/editorStore';
 
 interface NavbarProps {
-  viewMode: "3d" | "split" | "2d";
-  setViewMode: (mode: "3d" | "split" | "2d") => void;
+  viewMode: '3d' | 'split' | '2d';
+  setViewMode: (mode: '3d' | 'split' | '2d') => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
@@ -39,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
       <div className="flex items-center gap-3 sm:gap-6">
         {/* Logo */}
         <button
-          onClick={() => setActivePage("landing")}
+          onClick={() => setActivePage('landing')}
           className="flex items-center gap-2.5 group text-left"
         >
           <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-primary-600 via-primary-500 to-secondary-500 p-0.5 shadow-md shadow-primary-500/25 group-hover:scale-105 transition-transform">
@@ -49,30 +46,26 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
           </div>
           <div className="hidden sm:block">
             <div className="flex items-center gap-1.5">
-              <h1 className="text-xs font-black tracking-tight text-white uppercase">
-                STUDIO 3D
-              </h1>
+              <h1 className="text-xs font-black tracking-tight text-white uppercase">STUDIO 3D</h1>
               <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-primary-500/20 text-primary-400 border border-primary-500/30">
                 PRO
               </span>
             </div>
-            <p className="text-[10px] text-surface-400 font-medium">
-              Custom Apparel
-            </p>
+            <p className="text-[10px] text-surface-400 font-medium">Custom Apparel</p>
           </div>
         </button>
       </div>
 
       {/* Center Studio Viewport Mode (when on studio page) */}
-      {activePage === "studio" && (
+      {activePage === 'studio' && (
         <div className="hidden lg:flex items-center gap-3">
           <div className="flex items-center p-1 bg-surface-900 rounded-2xl border border-surface-800">
             <button
-              onClick={() => setViewMode("3d")}
+              onClick={() => setViewMode('3d')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                viewMode === "3d"
-                  ? "bg-primary-600 text-white shadow-md"
-                  : "text-surface-400 hover:text-white"
+                viewMode === '3d'
+                  ? 'bg-primary-600 text-white shadow-md'
+                  : 'text-surface-400 hover:text-white'
               }`}
             >
               <Box className="w-3.5 h-3.5" />
@@ -80,11 +73,11 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
             </button>
 
             <button
-              onClick={() => setViewMode("split")}
+              onClick={() => setViewMode('split')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                viewMode === "split"
-                  ? "bg-primary-600 text-white shadow-md"
-                  : "text-surface-400 hover:text-white"
+                viewMode === 'split'
+                  ? 'bg-primary-600 text-white shadow-md'
+                  : 'text-surface-400 hover:text-white'
               }`}
             >
               <SplitSquareVertical className="w-3.5 h-3.5" />
@@ -92,11 +85,11 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
             </button>
 
             <button
-              onClick={() => setViewMode("2d")}
+              onClick={() => setViewMode('2d')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                viewMode === "2d"
-                  ? "bg-primary-600 text-white shadow-md"
-                  : "text-surface-400 hover:text-white"
+                viewMode === '2d'
+                  ? 'bg-primary-600 text-white shadow-md'
+                  : 'text-surface-400 hover:text-white'
               }`}
             >
               <LayoutTemplate className="w-3.5 h-3.5" />
@@ -150,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
         </a>
 
         {/* Project & Export (visible in studio) */}
-        {activePage === "studio" && (
+        {activePage === 'studio' && (
           <>
             <button
               onClick={() => setProjectModalOpen(true)}

@@ -14,13 +14,13 @@ export async function exportToPSD(
   height: number = 2000
 ): Promise<Blob> {
   const zoneLayers = layers.filter((l) => l.zone === zone && l.visible);
-  
+
   // 1. Garment Base Color Layer
   const baseCanvas = document.createElement('canvas');
   baseCanvas.width = width;
   baseCanvas.height = height;
   const baseCtx = baseCanvas.getContext('2d')!;
-  
+
   // Fill background with T-shirt base color
   baseCtx.fillStyle = colors.body;
   baseCtx.fillRect(0, 0, width, height);

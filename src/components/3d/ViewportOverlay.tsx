@@ -1,10 +1,5 @@
 import React from 'react';
-import { 
-  RotateCw, 
-  Sun, 
-  Grid3X3, 
-  Compass
-} from 'lucide-react';
+import { RotateCw, Sun, Grid3X3, Compass } from 'lucide-react';
 import { useSceneStore, LightingPreset } from '../../store/sceneStore';
 import { useEditorStore } from '../../store/editorStore';
 

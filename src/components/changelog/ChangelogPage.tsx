@@ -1,34 +1,46 @@
-import React, { useState } from 'react';
-import { 
-  GitCommit, 
-  Sparkles, 
-  ArrowLeft, 
-  Tag, 
-  CheckCircle2, 
-  Wrench, 
-  Bug, 
-  Zap, 
+import React from 'react';
+import {
+  GitCommit,
+  Sparkles,
+  ArrowLeft,
+  Tag,
+  Bug,
+  Zap,
   Calendar,
-  Layers,
-  ArrowUpRight
+  ArrowUpRight,
 } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 import { CHANGELOG_DATA, ChangelogEntry } from '../../data/changelog';
 
 export const ChangelogPage: React.FC = () => {
   const setActivePage = useEditorStore((s) => s.setActivePage);
-  const [filter, setFilter] = useState<'all' | 'feature' | 'improvement' | 'fix'>('all');
 
   const getTagBadge = (tag: ChangelogEntry['tag']) => {
     switch (tag) {
       case 'major':
-        return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary-500/20 text-primary-300 border border-primary-500/30">Major Release</span>;
+        return (
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary-500/20 text-primary-300 border border-primary-500/30">
+            Major Release
+          </span>
+        );
       case 'feature':
-        return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-success-500/20 text-success-300 border border-success-500/30">New Features</span>;
+        return (
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-success-500/20 text-success-300 border border-success-500/30">
+            New Features
+          </span>
+        );
       case 'improvement':
-        return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-accent-500/20 text-accent-300 border border-accent-500/30">Improvements</span>;
+        return (
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-accent-500/20 text-accent-300 border border-accent-500/30">
+            Improvements
+          </span>
+        );
       default:
-        return <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-secondary-500/20 text-secondary-300 border border-secondary-500/30">Bug Fixes</span>;
+        return (
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-secondary-500/20 text-secondary-300 border border-secondary-500/30">
+            Bug Fixes
+          </span>
+        );
     }
   };
 
@@ -78,7 +90,8 @@ export const ChangelogPage: React.FC = () => {
             What's New in Studio 3D
           </h1>
           <p className="text-sm text-surface-400 max-w-2xl">
-            Keep track of all feature additions, 3D engine upgrades, workflow optimizations, and bug fixes for the 3D T-Shirt Designer.
+            Keep track of all feature additions, 3D engine upgrades, workflow optimizations, and bug
+            fixes for the 3D T-Shirt Designer.
           </p>
         </div>
       </div>
@@ -89,11 +102,13 @@ export const ChangelogPage: React.FC = () => {
           {CHANGELOG_DATA.map((entry) => (
             <div key={entry.version} className="relative group">
               {/* Timeline Node Icon */}
-              <div className={`absolute -left-[33px] sm:-left-[41px] top-1.5 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                entry.isLatest
-                  ? 'bg-primary-600 border-white text-white shadow-lg shadow-primary-600/40'
-                  : 'bg-surface-900 border-surface-700 text-surface-400'
-              }`}>
+              <div
+                className={`absolute -left-[33px] sm:-left-[41px] top-1.5 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                  entry.isLatest
+                    ? 'bg-primary-600 border-white text-white shadow-lg shadow-primary-600/40'
+                    : 'bg-surface-900 border-surface-700 text-surface-400'
+                }`}
+              >
                 <Tag className="w-3 h-3" />
               </div>
 
@@ -112,7 +127,7 @@ export const ChangelogPage: React.FC = () => {
                     )}
                     {getTagBadge(entry.tag)}
                   </div>
-                  
+
                   <div className="flex items-center gap-1.5 text-xs text-surface-400">
                     <Calendar className="w-3.5 h-3.5" />
                     <span>{entry.date}</span>
@@ -121,9 +136,7 @@ export const ChangelogPage: React.FC = () => {
 
                 {/* Title & Summary */}
                 <div className="space-y-2">
-                  <h3 className="text-base sm:text-lg font-bold text-surface-100">
-                    {entry.title}
-                  </h3>
+                  <h3 className="text-base sm:text-lg font-bold text-surface-100">{entry.title}</h3>
                   <p className="text-xs sm:text-sm text-surface-400 leading-relaxed">
                     {entry.summary}
                   </p>

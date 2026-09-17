@@ -7,11 +7,14 @@ export const GarmentColorTab: React.FC = () => {
   const colors = useEditorStore((s) => s.colors);
   const setColor = useEditorStore((s) => s.setColor);
 
-  const [activeCategory, setActiveCategory] = useState<'all' | 'neutrals' | 'vibrant' | 'earth' | 'pastel'>('all');
+  const [activeCategory, setActiveCategory] = useState<
+    'all' | 'neutrals' | 'vibrant' | 'earth' | 'pastel'
+  >('all');
 
-  const filteredPresets = activeCategory === 'all'
-    ? PRESET_COLORS
-    : PRESET_COLORS.filter((c) => c.category === activeCategory);
+  const filteredPresets =
+    activeCategory === 'all'
+      ? PRESET_COLORS
+      : PRESET_COLORS.filter((c) => c.category === activeCategory);
 
   const currentColor = colors.body;
 
@@ -73,9 +76,16 @@ export const GarmentColorTab: React.FC = () => {
                 {isSelected && (
                   <Check
                     className={`w-4 h-4 drop-shadow ${
-                      ['#ffffff', '#f3e8dc', '#d1d5db', '#ccfbf1', '#fef3c7', '#fce7f3', '#e9d5ff', '#d4b996'].includes(
-                        preset.hex.toLowerCase()
-                      )
+                      [
+                        '#ffffff',
+                        '#f3e8dc',
+                        '#d1d5db',
+                        '#ccfbf1',
+                        '#fef3c7',
+                        '#fce7f3',
+                        '#e9d5ff',
+                        '#d4b996',
+                      ].includes(preset.hex.toLowerCase())
                         ? 'text-surface-900'
                         : 'text-white'
                     }`}

@@ -1,18 +1,18 @@
 import React from 'react';
-import { 
-  Layers, 
-  Eye, 
-  EyeOff, 
-  Lock, 
-  Unlock, 
-  Trash2, 
-  Copy, 
-  ArrowUp, 
-  ArrowDown, 
-  Type, 
-  Image as ImageIcon, 
+import {
+  Layers,
+  Eye,
+  EyeOff,
+  Lock,
+  Unlock,
+  Trash2,
+  Copy,
+  ArrowUp,
+  ArrowDown,
+  Type,
+  Image as ImageIcon,
   Shapes,
-  Sparkles
+  Sparkles,
 } from 'lucide-react';
 import { useEditorStore } from '../../../store/editorStore';
 
@@ -45,7 +45,7 @@ export const LayersTab: React.FC = () => {
   const moveLayerOrder = (currentId: string, direction: 'up' | 'down') => {
     const globalIndex = layers.findIndex((l) => l.id === currentId);
     if (globalIndex === -1) return;
-    
+
     const targetIndex = direction === 'up' ? globalIndex + 1 : globalIndex - 1;
     if (targetIndex >= 0 && targetIndex < layers.length) {
       reorderLayers(globalIndex, targetIndex);
@@ -71,7 +71,8 @@ export const LayersTab: React.FC = () => {
 
       {zoneLayers.length === 0 ? (
         <div className="p-8 text-center bg-surface-900/40 rounded-3xl border border-dashed border-surface-800 text-surface-500 text-xs">
-          No layers added to this zone yet. Use the Text, Image, or Clipart tabs to create your design!
+          No layers added to this zone yet. Use the Text, Image, or Clipart tabs to create your
+          design!
         </div>
       ) : (
         <div className="space-y-2">
@@ -133,10 +134,16 @@ export const LayersTab: React.FC = () => {
                     }}
                     title={layer.locked ? 'Unlock' : 'Lock'}
                     className={`p-1 rounded-lg ${
-                      layer.locked ? 'text-warning-400' : 'text-surface-400 hover:text-white hover:bg-surface-800'
+                      layer.locked
+                        ? 'text-warning-400'
+                        : 'text-surface-400 hover:text-white hover:bg-surface-800'
                     }`}
                   >
-                    {layer.locked ? <Lock className="w-3.5 h-3.5" /> : <Unlock className="w-3.5 h-3.5" />}
+                    {layer.locked ? (
+                      <Lock className="w-3.5 h-3.5" />
+                    ) : (
+                      <Unlock className="w-3.5 h-3.5" />
+                    )}
                   </button>
                   <button
                     onClick={(e) => {
@@ -145,10 +152,16 @@ export const LayersTab: React.FC = () => {
                     }}
                     title={layer.visible ? 'Hide' : 'Show'}
                     className={`p-1 rounded-lg ${
-                      !layer.visible ? 'text-danger-400' : 'text-surface-400 hover:text-white hover:bg-surface-800'
+                      !layer.visible
+                        ? 'text-danger-400'
+                        : 'text-surface-400 hover:text-white hover:bg-surface-800'
                     }`}
                   >
-                    {layer.visible ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                    {layer.visible ? (
+                      <Eye className="w-3.5 h-3.5" />
+                    ) : (
+                      <EyeOff className="w-3.5 h-3.5" />
+                    )}
                   </button>
                   <button
                     onClick={(e) => {

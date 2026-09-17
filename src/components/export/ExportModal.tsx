@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  Download, 
-  Camera, 
-  Printer, 
-  Sparkles 
-} from 'lucide-react';
+import { X, Download, Camera, Printer, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useEditorStore } from '../../store/editorStore';
-import { ExportOptions, ExportFormat, ExportTarget, MockupBackground, ExportResolution } from '../../types/export';
+import {
+  ExportOptions,
+  ExportFormat,
+  ExportTarget,
+  MockupBackground,
+  ExportResolution,
+} from '../../types/export';
 import { capture3DMockup, generatePrintArtwork, downloadFile } from '../../utils/imageExporter';
 
 interface ExportModalProps {
@@ -25,7 +25,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ canvas3DRef }) => {
 
   const [target, setTarget] = useState<ExportTarget>('3d_mockup');
   const [format, setFormat] = useState<ExportFormat>('png');
-  const [resolution, setResolution] = useState<ExportResolution>('2x');
+  const [resolution] = useState<ExportResolution>('2x');
   const [background, setBackground] = useState<MockupBackground>('studio');
   const [includeMeasurements, setIncludeMeasurements] = useState(true);
   const [fileName, setFileName] = useState('custom-tshirt-design');
@@ -46,7 +46,8 @@ export const ExportModal: React.FC<ExportModalProps> = ({ canvas3DRef }) => {
       };
 
       if (target === '3d_mockup') {
-        const canvas = canvas3DRef?.current || (document.querySelector('canvas') as HTMLCanvasElement);
+        const canvas =
+          canvas3DRef?.current || (document.querySelector('canvas') as HTMLCanvasElement);
         if (!canvas) {
           throw new Error('3D Canvas viewport not found');
         }
@@ -89,7 +90,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({ canvas3DRef }) => {
             </div>
             <div>
               <h2 className="text-base font-bold">Export Design & Production Files</h2>
-              <p className="text-xs text-surface-400">Download high-res 3D mockups or print-ready layered artwork</p>
+              <p className="text-xs text-surface-400">
+                Download high-res 3D mockups or print-ready layered artwork
+              </p>
             </div>
           </div>
           <button
@@ -158,7 +161,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({ canvas3DRef }) => {
                 }`}
               >
                 <div className="text-xs font-bold">{f.label}</div>
-                <div className={`text-[10px] truncate ${format === f.id ? 'text-primary-100' : 'text-surface-400'}`}>
+                <div
+                  className={`text-[10px] truncate ${format === f.id ? 'text-primary-100' : 'text-surface-400'}`}
+                >
                   {f.desc}
                 </div>
               </button>
@@ -204,7 +209,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({ canvas3DRef }) => {
             <button
               onClick={() => setIncludeMeasurements(!includeMeasurements)}
               className={`px-3 py-1 rounded-lg text-xs font-bold transition ${
-                includeMeasurements ? 'bg-primary-600 text-white' : 'bg-surface-700 text-surface-400'
+                includeMeasurements
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-surface-700 text-surface-400'
               }`}
             >
               {includeMeasurements ? 'Included' : 'None'}

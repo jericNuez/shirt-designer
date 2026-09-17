@@ -1,21 +1,20 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { 
-  Move, 
-  RotateCw, 
-  Trash2, 
-  Copy, 
-  Maximize2, 
-  AlignCenterHorizontal, 
-  AlignCenterVertical 
+import React, { useRef, useEffect } from 'react';
+import {
+  RotateCw,
+  Trash2,
+  Copy,
+  Maximize2,
+  AlignCenterHorizontal,
+  AlignCenterVertical,
 } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 import { renderLayersToCanvas } from '../../utils/canvasRenderer';
-import { DesignLayer, ImageLayer, TextLayer, ShapeLayer } from '../../types/editor';
+import { DesignLayer, ImageLayer, TextLayer } from '../../types/editor';
 
 export const Canvas2DStage: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const activeZone = useEditorStore((s) => s.activeZone);
   const layers = useEditorStore((s) => s.layers);
   const selectedLayerId = useEditorStore((s) => s.selectedLayerId);
@@ -36,7 +35,8 @@ export const Canvas2DStage: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    renderLayersToCanvas(ctx, zoneLayers, canvas.width, canvas.height);
+    const currentZoneLayers = layers.filter((l) => l.zone === activeZone);
+    renderLayersToCanvas(ctx, currentZoneLayers, canvas.width, canvas.height);
   }, [layers, activeZone, colors]);
 
   // Start Move Dragging with direct 1:1 mouse tracking
@@ -91,7 +91,7 @@ export const Canvas2DStage: React.FC = () => {
     const initialScale = layer.scale;
 
     const onPointerMove = (moveEv: PointerEvent) => {
-      const delta = ((moveEv.clientX - startClientX) + (moveEv.clientY - startClientY)) / 180;
+      const delta = (moveEv.clientX - startClientX + (moveEv.clientY - startClientY)) / 180;
       const newScale = Math.max(0.15, Math.min(3.0, initialScale + delta));
       updateLayer(layer.id, { scale: Number(newScale.toFixed(2)) });
     };
@@ -181,9 +181,7 @@ export const Canvas2DStage: React.FC = () => {
           <span className="text-[10px] font-semibold text-primary-400/60 tracking-wider uppercase">
             {activeZone.replace('_', ' ')} Printable Area
           </span>
-          <span className="text-[10px] font-semibold text-primary-400/30 self-end">
-            12" × 16"
-          </span>
+          <span className="text-[10px] font-semibold text-primary-400/30 self-end">12" × 16"</span>
         </div>
 
         {/* Center alignment guides */}
@@ -210,7 +208,9 @@ export const Canvas2DStage: React.FC = () => {
             <div
               key={layer.id}
               className={`absolute z-10 select-none ${
-                isSelected ? 'cursor-move ring-0' : 'cursor-pointer hover:border hover:border-primary-400/50 rounded-lg'
+                isSelected
+                  ? 'cursor-move ring-0'
+                  : 'cursor-pointer hover:border hover:border-primary-400/50 rounded-lg'
               }`}
               style={{
                 left: `${layer.x * 100}%`,
