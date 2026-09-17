@@ -108,7 +108,7 @@ export const LandingPage: React.FC = () => {
               </button>
 
               <a
-                href="https://buymeacoffee.com/jericnuez"
+                href="https://buymeacoffee.com/jerictolibq"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-3.5 bg-surface-900 hover:bg-surface-800 border border-surface-700/80 hover:border-accent-500/50 text-surface-200 font-semibold text-sm rounded-2xl flex items-center gap-2 transition-all hover:scale-105 group"
@@ -223,7 +223,7 @@ export const LandingPage: React.FC = () => {
             </a>
 
             <a
-              href="https://buymeacoffee.com/jericnuez"
+              href="https://buymeacoffee.com/jerictolibq"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-5 py-3 bg-gradient-to-r from-accent-500 to-amber-500 hover:from-amber-500 hover:to-accent-400 text-surface-950 text-xs font-extrabold rounded-2xl shadow-lg shadow-accent-500/20 flex items-center justify-center gap-2 transition hover:scale-105"
@@ -279,7 +279,7 @@ export const LandingPage: React.FC = () => {
               <span>GitHub</span>
             </a>
             <a
-              href="https://buymeacoffee.com/jericnuez"
+              href="https://buymeacoffee.com/jerictolibq"
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent-400 hover:text-accent-300 transition flex items-center gap-1"

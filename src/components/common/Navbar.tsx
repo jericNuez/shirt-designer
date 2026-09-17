@@ -131,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
 
         {/* Buy Me a Coffee */}
         <a
-          href="https://buymeacoffee.com/jericnuez"
+          href="https://buymeacoffee.com/jerictolibq"
           target="_blank"
           rel="noopener noreferrer"
           title="Support the developer"
