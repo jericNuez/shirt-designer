@@ -10,11 +10,14 @@ import { LandingPage } from './components/landing/LandingPage';
 import { ChangelogPage } from './components/changelog/ChangelogPage';
 import { TermsPage } from './components/legal/TermsPage';
 import { PrivacyPolicyPage } from './components/legal/PrivacyPolicyPage';
+import { MobileBottomDock } from './components/editor/mobile/MobileBottomDock';
+import { MobileBottomSheet } from './components/editor/mobile/MobileBottomSheet';
+import { MobileZoneBar } from './components/editor/mobile/MobileZoneBar';
 import { useEditorStore } from './store/editorStore';
 
 export const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<'3d' | 'split' | '2d'>('split');
-  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(true);
+  const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
   const canvas3DRef = useRef<HTMLCanvasElement>(null);
 
   const activePage = useEditorStore((s) => s.activePage);
@@ -23,6 +26,7 @@ export const App: React.FC = () => {
   const selectedLayerId = useEditorStore((s) => s.selectedLayerId);
   const deleteLayer = useEditorStore((s) => s.deleteLayer);
   const setExportModalOpen = useEditorStore((s) => s.setExportModalOpen);
+  const setActiveTab = useEditorStore((s) => s.setActiveTab);
 
   useEffect(() => {
     const handleResize = () => {
@@ -80,12 +84,14 @@ export const App: React.FC = () => {
         {activePage === 'privacy' && <PrivacyPolicyPage />}
 
         {activePage === 'studio' && (
-          <div className="w-full h-full flex flex-col-reverse lg:flex-row overflow-hidden relative">
-            <EditorSidebar
-              isMobileOpen={isMobileDrawerOpen}
-              onToggleMobile={() => setIsMobileDrawerOpen((prev) => !prev)}
-            />
+          <div className="w-full h-full flex flex-row overflow-hidden relative">
+            {/* Desktop Dedicated Sidebar */}
+            <EditorSidebar />
 
+            {/* Mobile Top Zone Selector Bar (Front, Back, Left, Right) */}
+            <MobileZoneBar />
+
+            {/* Viewport Canvas Area (100% full screen on mobile) */}
             <main className="flex-1 h-full min-h-0 flex overflow-hidden relative bg-surface-950">
               {(viewMode === '3d' || viewMode === 'split') && (
                 <div
@@ -109,6 +115,21 @@ export const App: React.FC = () => {
                 </div>
               )}
             </main>
+
+            {/* Mobile Floating Bottom Dock & Slide-Up Sheet */}
+            <MobileBottomDock
+              isSheetOpen={isMobileSheetOpen}
+              onOpenSheet={(tab) => {
+                if (tab) setActiveTab(tab);
+                setIsMobileSheetOpen(true);
+              }}
+              onToggleSheet={() => setIsMobileSheetOpen((prev) => !prev)}
+            />
+
+            <MobileBottomSheet
+              isOpen={isMobileSheetOpen}
+              onClose={() => setIsMobileSheetOpen(false)}
+            />
           </div>
         )}
       </div>

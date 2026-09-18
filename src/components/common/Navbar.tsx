@@ -55,87 +55,140 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
         </button>
       </div>
 
-      {/* Center Studio Viewport Mode (when on studio page) */}
+      {/* Studio Viewport Mode Switcher (Desktop & Mobile) */}
       {activePage === 'studio' && (
-        <div className="hidden lg:flex items-center gap-3">
-          <div className="flex items-center p-1 bg-surface-900 rounded-2xl border border-surface-800">
-            <button
-              onClick={() => setViewMode('3d')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                viewMode === '3d'
-                  ? 'bg-primary-600 text-white shadow-md'
-                  : 'text-surface-400 hover:text-white'
-              }`}
-            >
-              <Box className="w-3.5 h-3.5" />
-              <span>3D View</span>
-            </button>
+        <>
+          {/* Desktop Controls (>= 1024px) */}
+          <div className="hidden lg:flex items-center gap-3">
+            <div className="flex items-center p-1 bg-surface-900 rounded-2xl border border-surface-800">
+              <button
+                onClick={() => setViewMode('3d')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  viewMode === '3d'
+                    ? 'bg-primary-600 text-white shadow-md'
+                    : 'text-surface-400 hover:text-white'
+                }`}
+              >
+                <Box className="w-3.5 h-3.5" />
+                <span>3D View</span>
+              </button>
 
-            <button
-              onClick={() => setViewMode('split')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                viewMode === 'split'
-                  ? 'bg-primary-600 text-white shadow-md'
-                  : 'text-surface-400 hover:text-white'
-              }`}
-            >
-              <SplitSquareVertical className="w-3.5 h-3.5" />
-              <span>Split</span>
-            </button>
+              <button
+                onClick={() => setViewMode('split')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  viewMode === 'split'
+                    ? 'bg-primary-600 text-white shadow-md'
+                    : 'text-surface-400 hover:text-white'
+                }`}
+              >
+                <SplitSquareVertical className="w-3.5 h-3.5" />
+                <span>Split</span>
+              </button>
 
-            <button
-              onClick={() => setViewMode('2d')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                viewMode === '2d'
-                  ? 'bg-primary-600 text-white shadow-md'
-                  : 'text-surface-400 hover:text-white'
-              }`}
-            >
-              <LayoutTemplate className="w-3.5 h-3.5" />
-              <span>2D Canvas</span>
-            </button>
+              <button
+                onClick={() => setViewMode('2d')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  viewMode === '2d'
+                    ? 'bg-primary-600 text-white shadow-md'
+                    : 'text-surface-400 hover:text-white'
+                }`}
+              >
+                <LayoutTemplate className="w-3.5 h-3.5" />
+                <span>2D Canvas</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1 p-1 bg-surface-900 rounded-xl border border-surface-800">
+              <button
+                onClick={undo}
+                disabled={pastLength === 0}
+                title="Undo (Ctrl+Z)"
+                className="p-1.5 rounded-lg text-surface-400 hover:text-white hover:bg-surface-800 disabled:opacity-30 transition"
+              >
+                <Undo2 className="w-4 h-4" />
+              </button>
+              <button
+                onClick={redo}
+                disabled={futureLength === 0}
+                title="Redo (Ctrl+Y)"
+                className="p-1.5 rounded-lg text-surface-400 hover:text-white hover:bg-surface-800 disabled:opacity-30 transition"
+              >
+                <Redo2 className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          <div className="flex items-center gap-1 p-1 bg-surface-900 rounded-xl border border-surface-800">
-            <button
-              onClick={undo}
-              disabled={pastLength === 0}
-              title="Undo (Ctrl+Z)"
-              className="p-1.5 rounded-lg text-surface-400 hover:text-white hover:bg-surface-800 disabled:opacity-30 transition"
-            >
-              <Undo2 className="w-4 h-4" />
-            </button>
-            <button
-              onClick={redo}
-              disabled={futureLength === 0}
-              title="Redo (Ctrl+Y)"
-              className="p-1.5 rounded-lg text-surface-400 hover:text-white hover:bg-surface-800 disabled:opacity-30 transition"
-            >
-              <Redo2 className="w-4 h-4" />
-            </button>
+          {/* Mobile & Tablet Controls (< 1024px) */}
+          <div className="flex lg:hidden items-center gap-1.5">
+            <div className="flex items-center p-0.5 bg-surface-900 rounded-xl border border-surface-800">
+              <button
+                onClick={() => setViewMode('3d')}
+                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  viewMode === '3d' || viewMode === 'split'
+                    ? 'bg-primary-600 text-white shadow'
+                    : 'text-surface-400 hover:text-white'
+                }`}
+                title="3D Garment View"
+              >
+                <Box className="w-3.5 h-3.5" />
+                <span>3D</span>
+              </button>
+
+              <button
+                onClick={() => setViewMode('2d')}
+                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  viewMode === '2d'
+                    ? 'bg-primary-600 text-white shadow'
+                    : 'text-surface-400 hover:text-white'
+                }`}
+                title="2D Canvas Editor"
+              >
+                <LayoutTemplate className="w-3.5 h-3.5" />
+                <span>2D</span>
+              </button>
+            </div>
+
+            <div className="flex items-center p-0.5 bg-surface-900 rounded-xl border border-surface-800">
+              <button
+                onClick={undo}
+                disabled={pastLength === 0}
+                title="Undo"
+                className="p-1.5 rounded-lg text-surface-400 hover:text-white hover:bg-surface-800 disabled:opacity-25 transition"
+              >
+                <Undo2 className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={redo}
+                disabled={futureLength === 0}
+                title="Redo"
+                className="p-1.5 rounded-lg text-surface-400 hover:text-white hover:bg-surface-800 disabled:opacity-25 transition"
+              >
+                <Redo2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Right Actions: Feedback, Buy Me a Coffee, Save & Export */}
-      <div className="flex items-center gap-2 sm:gap-2.5">
-        {/* Feedback Button */}
+      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        {/* Feedback Button (Desktop / Tablet) */}
         <button
           onClick={() => setFeedbackModalOpen(true)}
           title="Give Feedback"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-surface-300 bg-surface-900 hover:bg-surface-800 border border-surface-800 hover:border-surface-700 transition"
+          className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-surface-300 bg-surface-900 hover:bg-surface-800 border border-surface-800 hover:border-surface-700 transition"
         >
           <MessageSquareHeart className="w-3.5 h-3.5 text-primary-400" />
           <span className="hidden xl:inline">Feedback</span>
         </button>
 
-        {/* Buy Me a Coffee */}
+        {/* Buy Me a Coffee (Desktop / Tablet) */}
         <a
           href="https://buymeacoffee.com/jerictolibq"
           target="_blank"
           rel="noopener noreferrer"
           title="Support the developer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-surface-950 bg-gradient-to-r from-accent-400 to-amber-400 hover:from-amber-400 hover:to-accent-300 shadow-md shadow-accent-400/20 transition hover:scale-105"
+          className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-surface-950 bg-gradient-to-r from-accent-400 to-amber-400 hover:from-amber-400 hover:to-accent-300 shadow-md shadow-accent-400/20 transition hover:scale-105"
         >
           <Coffee className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Coffee</span>
@@ -154,9 +207,9 @@ export const Navbar: React.FC<NavbarProps> = ({ viewMode, setViewMode }) => {
 
             <button
               onClick={() => setExportModalOpen(true)}
-              className="flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-primary-600/30 transition hover:scale-105"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-primary-600/30 transition active:scale-95"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5" />
               <span>Export</span>
             </button>
           </>

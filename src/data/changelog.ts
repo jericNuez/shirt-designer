@@ -13,10 +13,120 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_DATA: ChangelogEntry[] = [
   {
+    version: 'v1.4.2',
+    date: 'September 18, 2026',
+    title: 'Zero-Lag 2D Drag Engine & GPU Texture Optimization',
+    isLatest: true,
+    tag: 'improvement',
+    summary:
+      'Overhauled the 2D canvas drag-and-drop pipeline with local transform bypass and selective 3D texture hashing, eliminating input delay and delivering instant 60fps/120fps touch tracking on mobile.',
+    highlights: [
+      {
+        type: 'improvement',
+        description:
+          'Zero-Lag Move & Scale: Direct hardware-accelerated transform tracking during active drag, eliminating synchronous 800x1000 canvas redraws while moving.',
+      },
+      {
+        type: 'improvement',
+        description:
+          'Selective 3D Texture Hashing: Reduced WebGL decal texture updates by 75% by rendering only the single modified zone.',
+      },
+      {
+        type: 'improvement',
+        description:
+          'Pointer capture and willChange hardware acceleration for seamless, fluid touch drag response on all mobile devices.',
+      },
+    ],
+  },
+  {
+    version: 'v1.4.1',
+    date: 'September 18, 2026',
+    title: 'Mobile Zone Selector, Viewport Overlay & Layout Polish',
+    tag: 'fix',
+    summary:
+      'Fixed mobile Front/Back/Left/Right zone selection with synchronized 3D camera transitions, uncluttered the mobile top navbar, resolved viewport overlay squishing, and repositioned the 2D layer action bar.',
+    highlights: [
+      {
+        type: 'fix',
+        description:
+          'Fixed Front, Back, Left, and Right zone switching on mobile with a dedicated floating top zone bar and instant 3D camera auto-alignment.',
+      },
+      {
+        type: 'fix',
+        description:
+          'Resolved top Navbar squishing on mobile by decluttering secondary actions and providing ample breathing room for 3D/2D toggle and Export.',
+      },
+      {
+        type: 'fix',
+        description:
+          'Fixed Viewport Overlay button congestion on mobile with responsive lighting controls and full-width 3D angle button visibility.',
+      },
+      {
+        type: 'fix',
+        description:
+          'Repositioned 2D canvas layer action toolbar on mobile so it floats cleanly above the bottom dock without overlapping the shirt graphics.',
+      },
+    ],
+  },
+  {
+    version: 'v1.4.0',
+    date: 'September 18, 2026',
+    title: 'Immersive Full-Screen Mobile Studio & Touch Engine Overhaul',
+    tag: 'major',
+    summary:
+      'Transformed the mobile design studio into an edge-to-edge 100% full-screen 2D/3D viewport, introduced a sleek floating bottom dock & slide-up tool sheet, and overhauled the 2D canvas touch interaction engine for buttery-smooth 60fps manipulation.',
+    highlights: [
+      {
+        type: 'feature',
+        description:
+          '100% Full-Screen Canvas on mobile: 2D and 3D viewports now span the full display height and width without letterboxing or squashing.',
+      },
+      {
+        type: 'feature',
+        description:
+          'Sleek Floating Bottom Dock & Slide-Up Sheet: Quick one-tap tool access and zone switching that minimizes cleanly so your garment is never obstructed.',
+      },
+      {
+        type: 'improvement',
+        description:
+          'Buttery-Smooth Touch Engine: Pointer capture, touch-action: none, requestAnimationFrame throttled updates, and enlarged touch handles for effortless dragging, scaling, and rotating.',
+      },
+      {
+        type: 'improvement',
+        description:
+          'Enhanced Center-Snap Guides: Real-time visual alignment lines with smooth magnetic snapping for precise layer placement.',
+      },
+    ],
+  },
+  {
+    version: 'v1.3.1',
+    date: 'September 18, 2026',
+    title: 'Mobile 2D Canvas Display & View Switcher Fix',
+    tag: 'fix',
+    summary:
+      'Resolved mobile viewport 2D canvas visibility issues, added responsive 3D/2D segmented mode switcher controls to the mobile Navbar, and perfected responsive canvas scaling.',
+    highlights: [
+      {
+        type: 'fix',
+        description:
+          'Fixed 2D canvas height collapse on mobile screens by implementing dynamic aspect ratio (4:5) constraints and responsive max-height viewport bounds.',
+      },
+      {
+        type: 'feature',
+        description:
+          'Added a compact 3D View / 2D Canvas segmented toggle to the mobile and tablet Navbar for instant one-tap mode switching.',
+      },
+      {
+        type: 'improvement',
+        description:
+          'Optimized mobile Navbar spacing and touch controls to maintain full access to undo/redo and export actions without layout overflow.',
+      },
+    ],
+  },
+  {
     version: 'v1.3.0',
     date: 'September 18, 2026',
     title: 'Terms of Service, Privacy Policy & Legal Documentation',
-    isLatest: true,
     tag: 'feature',
     summary:
       'Introduced comprehensive Terms of Service and Privacy Policy documentation pages with structured data modules and integrated app navigation.',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Palette, UploadCloud, Type, Shapes, Layers, ChevronUp, ChevronDown } from 'lucide-react';
+import { Palette, UploadCloud, Type, Shapes, Layers } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 import { GarmentColorTab } from './tabs/GarmentColorTab';
 import { ImageUploadTab } from './tabs/ImageUploadTab';
@@ -9,14 +9,10 @@ import { LayersTab } from './tabs/LayersTab';
 import { ZoneSelector } from './ZoneSelector';
 
 interface EditorSidebarProps {
-  isMobileOpen?: boolean;
-  onToggleMobile?: () => void;
+  className?: string;
 }
 
-export const EditorSidebar: React.FC<EditorSidebarProps> = ({
-  isMobileOpen = true,
-  onToggleMobile,
-}) => {
+export const EditorSidebar: React.FC<EditorSidebarProps> = ({ className = '' }) => {
   const activeTab = useEditorStore((s) => s.activeTab);
   const setActiveTab = useEditorStore((s) => s.setActiveTab);
   const layers = useEditorStore((s) => s.layers);
@@ -31,31 +27,10 @@ export const EditorSidebar: React.FC<EditorSidebarProps> = ({
 
   return (
     <aside
-      className={`w-full lg:w-[420px] bg-surface-950/95 border-t lg:border-t-0 lg:border-r border-surface-800/80 z-20 backdrop-blur-xl flex flex-col transition-all duration-300 ${
-        isMobileOpen
-          ? 'h-[55vh] lg:h-full max-h-[75vh] lg:max-h-none'
-          : 'h-14 lg:h-full overflow-hidden'
-      }`}
+      className={`hidden lg:flex w-[420px] bg-surface-950/95 border-r border-surface-800/80 z-20 backdrop-blur-xl flex-col h-full overflow-hidden ${className}`}
     >
-      {/* Mobile Drawer Toggle Header */}
-      <div
-        onClick={onToggleMobile}
-        className="lg:hidden flex items-center justify-between px-4 py-2.5 bg-surface-900 border-b border-surface-800 cursor-pointer select-none"
-      >
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-          <span className="text-xs font-bold text-surface-200">Design Studio Controls & Tools</span>
-          <span className="text-[10px] bg-primary-500/20 text-primary-300 px-2 py-0.5 rounded-full capitalize">
-            {activeTab}
-          </span>
-        </div>
-        <button className="p-1 rounded-lg text-surface-400 hover:text-white">
-          {isMobileOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-        </button>
-      </div>
-
       {/* Top Zone Selection Bar */}
-      <div className="p-2.5 sm:p-3.5 border-b border-surface-800/80 flex items-center justify-between bg-surface-900/40 shrink-0">
+      <div className="p-3.5 border-b border-surface-800/80 flex items-center justify-between bg-surface-900/40 shrink-0">
         <ZoneSelector />
       </div>
 
@@ -66,12 +41,7 @@ export const EditorSidebar: React.FC<EditorSidebarProps> = ({
           return (
             <button
               key={tab.id}
-              onClick={() => {
-                setActiveTab(tab.id);
-                if (!isMobileOpen && onToggleMobile) {
-                  onToggleMobile();
-                }
-              }}
+              onClick={() => setActiveTab(tab.id)}
               className={`flex-1 flex flex-col items-center justify-center gap-1 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-[11px] font-semibold transition-all duration-200 relative ${
                 isActive
                   ? 'text-primary-400 bg-primary-500/10 shadow-sm border border-primary-500/20'

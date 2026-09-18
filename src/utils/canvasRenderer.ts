@@ -169,12 +169,70 @@ function drawShape(ctx: CanvasRenderingContext2D, shape: ShapeLayer, size: numbe
   }
 }
 
+let measurementCanvas: HTMLCanvasElement | null = null;
+let measurementCtx: CanvasRenderingContext2D | null = null;
+
+/**
+ * Accurately measures text dimensions for bounding box calculations
+ */
+export function measureTextLayer(
+  textLayer: TextLayer,
+  canvasWidth: number = 800
+): { width: number; height: number } {
+  if (typeof document === 'undefined') {
+    return { width: 120, height: 40 };
+  }
+  if (!measurementCanvas) {
+    measurementCanvas = document.createElement('canvas');
+    measurementCtx = measurementCanvas.getContext('2d');
+  }
+  if (!measurementCtx) {
+    return { width: 120, height: 40 };
+  }
+
+  const baseFontSize = textLayer.fontSize * (canvasWidth / 800);
+  measurementCtx.font = `${textLayer.fontStyle} ${textLayer.fontWeight} ${baseFontSize}px "${textLayer.fontFamily}", sans-serif`;
+
+  const lines = (textLayer.text || '').split('\n');
+  let maxWidth = 0;
+  for (const line of lines) {
+    const metrics = measurementCtx.measureText(line);
+    const extraSpacing = (line.length - 1) * (textLayer.letterSpacing || 0);
+    const w = metrics.width + extraSpacing;
+    if (w > maxWidth) maxWidth = w;
+  }
+  const lineHeight = baseFontSize * (textLayer.lineHeight || 1.2);
+  const totalHeight = lines.length * lineHeight;
+
+  if (textLayer.curved && Math.abs(textLayer.curveRadius) > 10) {
+    const arcHeight = Math.min(Math.abs(textLayer.curveRadius) * 0.45, maxWidth * 0.35);
+    return {
+      width: Math.max(maxWidth + 20, 50),
+      height: Math.max(totalHeight + arcHeight + 16, 40),
+    };
+  }
+
+  return {
+    width: Math.max(maxWidth + 16, 50),
+    height: Math.max(totalHeight + 12, 36),
+  };
+}
+
 // Cache loaded images
 const imageCache = new Map<string, HTMLImageElement>();
 
+export function getCachedImage(src: string): HTMLImageElement | null {
+  const img = imageCache.get(src);
+  if (img && img.complete && img.naturalWidth > 0) {
+    return img;
+  }
+  return null;
+}
+
 export function preloadImage(src: string): Promise<HTMLImageElement> {
-  if (imageCache.has(src)) {
-    return Promise.resolve(imageCache.get(src)!);
+  const cached = getCachedImage(src);
+  if (cached) {
+    return Promise.resolve(cached);
   }
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -189,13 +247,14 @@ export function preloadImage(src: string): Promise<HTMLImageElement> {
 }
 
 /**
- * Renders an array of layers onto a canvas context
+ * Synchronously renders an array of layers onto a canvas context (instantaneous 60/120fps redraw)
  */
-export async function renderLayersToCanvas(
+export function renderLayersToCanvasSync(
   ctx: CanvasRenderingContext2D,
   layers: DesignLayer[],
   width: number,
-  height: number
+  height: number,
+  onImageLoaded?: () => void
 ) {
   ctx.clearRect(0, 0, width, height);
 
@@ -278,15 +337,20 @@ export async function renderLayersToCanvas(
       }
     } else if (layer.type === 'image') {
       const imgLayer = layer as ImageLayer;
-      try {
-        const img = await preloadImage(imgLayer.src);
-        const baseSize = 350 * (width / 800);
-        const w = baseSize;
-        const h = baseSize / (imgLayer.aspectRatio || 1);
+      const img = getCachedImage(imgLayer.src);
+      const baseSize = 350 * (width / 800);
+      const w = baseSize;
+      const h = baseSize / (imgLayer.aspectRatio || 1);
 
+      if (img) {
         ctx.drawImage(img, -w / 2, -h / 2, w, h);
-      } catch (err) {
-        console.warn('Failed to render image layer:', err);
+      } else {
+        // Preload in background and trigger redraw on arrival
+        preloadImage(imgLayer.src)
+          .then(() => {
+            if (onImageLoaded) onImageLoaded();
+          })
+          .catch((err) => console.warn('Failed to load layer image:', err));
       }
     } else if (layer.type === 'shape') {
       const shapeLayer = layer as ShapeLayer;
@@ -296,4 +360,22 @@ export async function renderLayersToCanvas(
 
     ctx.restore();
   }
+}
+
+/**
+ * Renders an array of layers onto a canvas context (async wrapper)
+ */
+export async function renderLayersToCanvas(
+  ctx: CanvasRenderingContext2D,
+  layers: DesignLayer[],
+  width: number,
+  height: number
+) {
+  // Preload any uncached images first
+  const imagePromises = layers
+    .filter((l) => l.visible && l.type === 'image')
+    .map((l) => preloadImage((l as ImageLayer).src).catch(() => null));
+
+  await Promise.all(imagePromises);
+  renderLayersToCanvasSync(ctx, layers, width, height);
 }

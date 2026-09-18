@@ -21,7 +21,7 @@ export const TERMS_OF_SERVICE_DATA: LegalDocument = {
   title: 'Terms of Service',
   subtitle: 'Please read these terms carefully before using 3D T-Shirt Customizer Studio.',
   lastUpdated: 'September 18, 2026',
-  version: '1.3.0',
+  version: '1.4.2',
   summary:
     'By accessing and using 3D T-Shirt Customizer Studio, you agree to comply with and be bound by the following terms and conditions regarding user-uploaded content, software usage, and output files.',
   sections: [
@@ -107,7 +107,7 @@ export const PRIVACY_POLICY_DATA: LegalDocument = {
   title: 'Privacy Policy',
   subtitle: 'Learn how your data and privacy are handled in 3D T-Shirt Customizer Studio.',
   lastUpdated: 'September 18, 2026',
-  version: '1.3.0',
+  version: '1.4.2',
   summary:
     'We believe in total transparency and privacy-first design. 3D T-Shirt Customizer Studio operates primarily client-side: your designs and artwork never leave your browser.',
   sections: [

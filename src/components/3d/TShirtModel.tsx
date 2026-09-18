@@ -72,22 +72,36 @@ export const TShirtModel: React.FC = () => {
     });
   }, [textures]);
 
-  // Re-render canvases when layers change
+  // Track previous layers state per zone to prevent redundant redraws
+  const prevZoneLayersRef = useRef<Record<string, string>>({});
+
+  // Re-render canvases only for modified zones
   useEffect(() => {
-    const renderZone = async (zone: 'front' | 'back' | 'sleeve_left' | 'sleeve_right') => {
+    const zones: ('front' | 'back' | 'sleeve_left' | 'sleeve_right')[] = [
+      'front',
+      'back',
+      'sleeve_left',
+      'sleeve_right',
+    ];
+
+    zones.forEach(async (zone) => {
+      const zoneLayers = layers.filter((l) => l.zone === zone && l.visible);
+      const zoneKey = JSON.stringify(
+        zoneLayers.map((l) => `${l.id}-${l.x}-${l.y}-${l.scale}-${l.rotation}-${l.opacity}`)
+      );
+
+      if (prevZoneLayersRef.current[zone] === zoneKey) {
+        return;
+      }
+      prevZoneLayersRef.current[zone] = zoneKey;
+
       const canvas = canvases[zone];
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      const zoneLayers = layers.filter((l) => l.zone === zone && l.visible);
       await renderLayersToCanvas(ctx, zoneLayers, canvas.width, canvas.height);
       textures[zone].needsUpdate = true;
-    };
-
-    renderZone('front');
-    renderZone('back');
-    renderZone('sleeve_left');
-    renderZone('sleeve_right');
+    });
   }, [layers, canvases, textures]);
 
   // Turntable animation frame
