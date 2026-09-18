@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { DesignLayer, LayerInput, ProjectData } from '../types/editor';
 import { DesignZone, FabricConfig, ShirtColorConfig } from '../types/shirt';
 
-export type AppPage = 'landing' | 'studio' | 'changelog';
+export type AppPage = 'landing' | 'studio' | 'changelog' | 'terms' | 'privacy';
 
 interface EditorState {
   // Navigation

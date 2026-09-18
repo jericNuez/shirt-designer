@@ -8,6 +8,8 @@ import { ProjectSaveModal } from './components/export/ProjectSaveModal';
 import { FeedbackModal } from './components/feedback/FeedbackModal';
 import { LandingPage } from './components/landing/LandingPage';
 import { ChangelogPage } from './components/changelog/ChangelogPage';
+import { TermsPage } from './components/legal/TermsPage';
+import { PrivacyPolicyPage } from './components/legal/PrivacyPolicyPage';
 import { useEditorStore } from './store/editorStore';
 
 export const App: React.FC = () => {
@@ -72,6 +74,10 @@ export const App: React.FC = () => {
         {activePage === 'landing' && <LandingPage />}
 
         {activePage === 'changelog' && <ChangelogPage />}
+
+        {activePage === 'terms' && <TermsPage />}
+
+        {activePage === 'privacy' && <PrivacyPolicyPage />}
 
         {activePage === 'studio' && (
           <div className="w-full h-full flex flex-col-reverse lg:flex-row overflow-hidden relative">

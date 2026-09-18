@@ -13,10 +13,35 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_DATA: ChangelogEntry[] = [
   {
+    version: 'v1.3.0',
+    date: 'September 18, 2026',
+    title: 'Terms of Service, Privacy Policy & Legal Documentation',
+    isLatest: true,
+    tag: 'feature',
+    summary:
+      'Introduced comprehensive Terms of Service and Privacy Policy documentation pages with structured data modules and integrated app navigation.',
+    highlights: [
+      {
+        type: 'feature',
+        description:
+          'Dedicated Terms of Service page outlining user-uploaded artwork copyright warranties, MIT license boundaries, and physical manufacturing disclaimers.',
+      },
+      {
+        type: 'feature',
+        description:
+          'Privacy-first Privacy Policy page detailing local browser storage usage, client-side WebGL processing, and feedback webhook practices.',
+      },
+      {
+        type: 'improvement',
+        description:
+          'Integrated footer legal links in the Landing Page and added privacy disclosures within the Feedback submission modal.',
+      },
+    ],
+  },
+  {
     version: 'v1.2.0',
     date: 'September 17, 2026',
     title: 'Interactive Landing Page, User Feedback & Canvas Refinements',
-    isLatest: true,
     tag: 'feature',
     summary:
       'Introduced an interactive 3D landing showcase, in-app user feedback system, enhanced 2D canvas manipulation, and perfected vector shape PSD exports.',

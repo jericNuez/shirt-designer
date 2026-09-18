@@ -19,6 +19,7 @@ const DISCORD_WEBHOOK_URL = import.meta.env.VITE_DISCORD_WEBHOOK_URL || '';
 export const FeedbackModal: React.FC = () => {
   const isOpen = useEditorStore((s) => s.isFeedbackModalOpen);
   const setOpen = useEditorStore((s) => s.setFeedbackModalOpen);
+  const setActivePage = useEditorStore((s) => s.setActivePage);
 
   const [rating, setRating] = useState<number>(5);
   const [hoverRating, setHoverRating] = useState<number>(0);
@@ -130,7 +131,7 @@ export const FeedbackModal: React.FC = () => {
           : []),
       ],
       footer: {
-        text: `3D T-Shirt Customizer Studio v1.2.0 • Screen: ${
+        text: `3D T-Shirt Customizer Studio v1.3.0 • Screen: ${
           typeof window !== 'undefined' ? `${window.screen.width}x${window.screen.height}` : 'N/A'
         }`,
       },
@@ -318,6 +319,20 @@ export const FeedbackModal: React.FC = () => {
                 placeholder="you@example.com"
                 className="w-full bg-surface-800 border border-surface-700 rounded-xl px-3 py-2 text-xs text-surface-100 placeholder:text-surface-500 outline-none focus:border-primary-500"
               />
+              <p className="text-[10px] text-surface-500 pt-0.5">
+                We respect your privacy. Submitting feedback is subject to our{' '}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    setActivePage('privacy');
+                  }}
+                  className="text-primary-400 hover:text-primary-300 underline font-semibold transition"
+                >
+                  Privacy Policy
+                </button>
+                .
+              </p>
             </div>
 
             {/* Submit Actions */}

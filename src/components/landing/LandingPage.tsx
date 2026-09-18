@@ -17,6 +17,8 @@ import {
   CheckCircle2,
   ExternalLink,
   MousePointer2,
+  FileText,
+  ShieldCheck,
 } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 import { HeroAnimatedShirt } from './HeroAnimatedShirt';
@@ -261,6 +263,20 @@ export const LandingPage: React.FC = () => {
             >
               <GitCommit className="w-3.5 h-3.5" />
               <span>Changelog</span>
+            </button>
+            <button
+              onClick={() => setActivePage('terms')}
+              className="hover:text-primary-400 transition flex items-center gap-1"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Terms</span>
+            </button>
+            <button
+              onClick={() => setActivePage('privacy')}
+              className="hover:text-primary-400 transition flex items-center gap-1"
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Privacy</span>
             </button>
             <button
               onClick={() => setFeedbackModalOpen(true)}
