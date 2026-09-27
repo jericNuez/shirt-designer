@@ -23,6 +23,7 @@ interface ActiveTransform {
 export const Canvas2DStage: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const justTransformedRef = useRef<boolean>(false);
 
   const activeZone = useEditorStore((s) => s.activeZone);
   const layers = useEditorStore((s) => s.layers);
@@ -106,12 +107,19 @@ export const Canvas2DStage: React.FC = () => {
     e.preventDefault();
     e.stopPropagation();
 
+    try {
+      (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {
+      // Ignore
+    }
+
     setSelectedLayerId(layer.id);
     if (layer.type === 'text') setActiveTab('text');
     else if (layer.type === 'image') setActiveTab('upload');
     else if (layer.type === 'shape') setActiveTab('clipart');
 
     setIsDragging(true);
+    justTransformedRef.current = true;
     const startClientX = e.clientX;
     const startClientY = e.clientY;
     const initialX = layer.x;
@@ -122,6 +130,7 @@ export const Canvas2DStage: React.FC = () => {
 
     const onPointerMove = (moveEv: PointerEvent) => {
       moveEv.preventDefault();
+      justTransformedRef.current = true;
       const rect = containerRef.current?.getBoundingClientRect();
       if (!rect || rect.width <= 0 || rect.height <= 0) return;
 
@@ -162,6 +171,9 @@ export const Canvas2DStage: React.FC = () => {
       // Commit to store & clear local transform
       setActiveTransform(null);
       updateLayer(layer.id, { x: latestX, y: latestY });
+      setTimeout(() => {
+        justTransformedRef.current = false;
+      }, 100);
     };
 
     window.addEventListener('pointermove', onPointerMove, { passive: false });
@@ -174,7 +186,14 @@ export const Canvas2DStage: React.FC = () => {
     e.preventDefault();
     e.stopPropagation();
 
+    try {
+      (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {
+      // Ignore
+    }
+
     setIsScaling(true);
+    justTransformedRef.current = true;
     const startClientX = e.clientX;
     const startClientY = e.clientY;
     const initialScale = layer.scale;
@@ -183,6 +202,7 @@ export const Canvas2DStage: React.FC = () => {
 
     const onPointerMove = (moveEv: PointerEvent) => {
       moveEv.preventDefault();
+      justTransformedRef.current = true;
       const delta = (moveEv.clientX - startClientX + (moveEv.clientY - startClientY)) / 160;
       const newScale = Math.max(0.15, Math.min(3.5, initialScale + delta));
       latestScale = Number(newScale.toFixed(2));
@@ -203,6 +223,9 @@ export const Canvas2DStage: React.FC = () => {
 
       setActiveTransform(null);
       updateLayer(layer.id, { scale: latestScale });
+      setTimeout(() => {
+        justTransformedRef.current = false;
+      }, 100);
     };
 
     window.addEventListener('pointermove', onPointerMove, { passive: false });
@@ -215,16 +238,24 @@ export const Canvas2DStage: React.FC = () => {
     e.preventDefault();
     e.stopPropagation();
 
+    try {
+      (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {
+      // Ignore
+    }
+
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
     const centerX = rect.left + layer.x * rect.width;
     const centerY = rect.top + layer.y * rect.height;
 
     setIsRotating(true);
+    justTransformedRef.current = true;
     let latestRotation = layer.rotation;
 
     const onPointerMove = (moveEv: PointerEvent) => {
       moveEv.preventDefault();
+      justTransformedRef.current = true;
       const angleRad = Math.atan2(moveEv.clientY - centerY, moveEv.clientX - centerX);
       let angleDeg = Math.round((angleRad * 180) / Math.PI) + 90;
       if (angleDeg > 180) angleDeg -= 360;
@@ -255,6 +286,9 @@ export const Canvas2DStage: React.FC = () => {
 
       setActiveTransform(null);
       updateLayer(layer.id, { rotation: latestRotation });
+      setTimeout(() => {
+        justTransformedRef.current = false;
+      }, 100);
     };
 
     window.addEventListener('pointermove', onPointerMove, { passive: false });
@@ -321,6 +355,7 @@ export const Canvas2DStage: React.FC = () => {
           height: 'auto',
         }}
         onClick={(e) => {
+          if (justTransformedRef.current) return;
           if (e.target === containerRef.current || e.target === canvasRef.current) {
             setSelectedLayerId(null);
           }
@@ -380,10 +415,10 @@ export const Canvas2DStage: React.FC = () => {
           return (
             <div
               key={layer.id}
-              className={`absolute z-20 select-none touch-none ${
+              className={`absolute select-none touch-none ${
                 isSelected
-                  ? 'cursor-move ring-0'
-                  : 'cursor-pointer hover:border hover:border-primary-400/50 rounded-xl'
+                  ? 'z-30 cursor-move ring-0'
+                  : 'z-20 cursor-pointer hover:border hover:border-primary-400/50 rounded-xl'
               }`}
               style={{
                 left: `${currentX * 100}%`,
@@ -393,7 +428,10 @@ export const Canvas2DStage: React.FC = () => {
                 height: `${box.height}px`,
                 willChange: isDragging || isRotating || isScaling ? 'transform, left, top' : 'auto',
               }}
-              onPointerDown={(e) => handleStartMove(layer, e)}
+              onPointerDown={(e) => {
+                if (isScaling || isRotating || isDragging) return;
+                handleStartMove(layer, e);
+              }}
               title={`Drag to move ${layer.name || layer.type}`}
             >
               {isSelected ? (

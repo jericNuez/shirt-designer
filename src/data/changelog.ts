@@ -13,10 +13,30 @@ export interface ChangelogEntry {
 
 export const CHANGELOG_DATA: ChangelogEntry[] = [
   {
+    version: 'v1.4.3',
+    date: 'September 27, 2026',
+    title: '3D Model Design Property Real-Time Synchronization',
+    isLatest: true,
+    tag: 'fix',
+    summary:
+      'Fixed an issue where changes to text color, typography, fonts, shadows, shapes, and other design attributes updated the 2D canvas but failed to synchronize onto the 3D model decals.',
+    highlights: [
+      {
+        type: 'fix',
+        description:
+          'Comprehensive 3D Layer Synchronization: Serialized complete layer definitions (including fill color, stroke, font styling, and shadow properties) to trigger instant WebGL decal re-renders upon any design adjustment.',
+      },
+      {
+        type: 'improvement',
+        description:
+          'Maintained 75% GPU optimization by selectively updating only the specific garment zone (Front, Back, Left Sleeve, Right Sleeve) that was modified.',
+      },
+    ],
+  },
+  {
     version: 'v1.4.2',
     date: 'September 18, 2026',
     title: 'Zero-Lag 2D Drag Engine & GPU Texture Optimization',
-    isLatest: true,
     tag: 'improvement',
     summary:
       'Overhauled the 2D canvas drag-and-drop pipeline with local transform bypass and selective 3D texture hashing, eliminating input delay and delivering instant 60fps/120fps touch tracking on mobile.',

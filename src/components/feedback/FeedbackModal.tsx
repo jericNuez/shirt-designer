@@ -131,7 +131,7 @@ export const FeedbackModal: React.FC = () => {
           : []),
       ],
       footer: {
-        text: `3D T-Shirt Customizer Studio v1.4.2 • Screen: ${
+        text: `3D T-Shirt Customizer Studio v1.4.3 • Screen: ${
           typeof window !== 'undefined' ? `${window.screen.width}x${window.screen.height}` : 'N/A'
         }`,
       },

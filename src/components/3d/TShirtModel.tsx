@@ -86,9 +86,7 @@ export const TShirtModel: React.FC = () => {
 
     zones.forEach(async (zone) => {
       const zoneLayers = layers.filter((l) => l.zone === zone && l.visible);
-      const zoneKey = JSON.stringify(
-        zoneLayers.map((l) => `${l.id}-${l.x}-${l.y}-${l.scale}-${l.rotation}-${l.opacity}`)
-      );
+      const zoneKey = JSON.stringify(zoneLayers);
 
       if (prevZoneLayersRef.current[zone] === zoneKey) {
         return;
